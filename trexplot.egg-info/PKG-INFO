@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: trexplot
+Version: 1
+Summary: Fat package with plotting scriptz! Mad vibes!
+Home-page: https://github.com/hammytheham/trexplot
+Author: Hamish Robertson
+Author-email: h(dot)alastair(dot)r@gmail.com
+License: UNKNOWN
+Description: # Welcome to trexplot
+        
+        We aim to deliver a lo-fi plotting experience to Toughreactmech output files.
+        
+        ## To install
+        
+        `pip install whatever-its-called`
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

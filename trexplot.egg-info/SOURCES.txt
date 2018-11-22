@@ -1,0 +1,6 @@
+README.md
+setup.py
+trexplot.egg-info/PKG-INFO
+trexplot.egg-info/SOURCES.txt
+trexplot.egg-info/dependency_links.txt
+trexplot.egg-info/top_level.txt
