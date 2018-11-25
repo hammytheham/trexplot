@@ -16,13 +16,12 @@ import numpy as np
 import matplotlib.dates as mdates
 import datetime
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
 from matplotlib.backends.backend_pdf import PdfPages
 import sys
 from trexoptions import *     #import the option file from within the same folder
 
 cwd = os.getcwd()
-
-
 
 def flowdata_import():
     """
@@ -76,9 +75,6 @@ def flowdata_import():
             flowfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
     return flowfaces
-
-
-
 
 def flowvector_import():
     """
@@ -136,9 +132,6 @@ def flowvector_import():
 
     return vecfaces
 
-
-
-
 def displace_import():
     """
     Imports the displacement file from current working directory. Column names are largely preserved. Takes in only the last time step values.
@@ -186,8 +179,188 @@ def displace_import():
 
     return dispfaces
 
+def aq_conc_import():
+    """
+    Imports the aq_conc file
+    """
+    aqconcdata=pd.read_csv(cwd+'/aqconc.tec',sep=r"\s*",skiprows=[0],engine='python')
+    aqconcdata_modified= aqconcdata[aqconcdata.columns[:-1]]
+    aqconcdata_modified.columns = aqconcdata.columns[1:]
+
+    aqconcdata=aqconcdata_modified.rename(index=str,columns=aqconc_name)
+
+    #Last time step - top, bottom, side walls
+    val=int(aqconcdata.loc[aqconcdata["X"] == 'Zone'][-1:].index[0])#value of the last time zone
+    lastval=int(aqconcdata.index[-1])
+    length=lastval - val #length of last time zone
+    zone=aqconcdata[val+1:lastval+1]
+
+    zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
+
+    top,tpval =zone.loc[zone["Z"] == max(zone.Z) ],max(zone.Z) #2D array of the top surface
+    bot,btval =zone.loc[zone["Z"] == min(zone.Z) ],min(zone.Z)#bottom surface
+    MaxY,MxYval=zone.loc[zone["Y"] == max(zone.Y) ],max(zone.Y)#MaxY face
+    MinY,MnYval=zone.loc[zone["Y"] == min(zone.Y) ],min(zone.Y)#MinY face
+    MaxX,MxXval=zone.loc[zone["X"] == max(zone.X) ],max(zone.X)#MaxX face
+    MinX,MnXval=zone.loc[zone["X"] == min(zone.X) ],min(zone.X)#MinX face
+
+    xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
+    xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
 
 
+    aqconcfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
+           'tpval' : tpval, 'btval' : btval, 'MxYval' : MxYval, 'MnYval' : MnYval,
+               'MxXval' : MxXval, 'MnXval' : MnXval,'xsec_x_half':xsec_x,'xsec_x_half_val':xsec_x_val,
+              'xsec_y_half':xsec_y,'xsec_y_val_half':xsec_y_val}
+
+    if op_xsec_X_user == True:
+        for i in list(range(len(xsec_user_xvals))):
+            xsec_x_user,xsec_x_user_val=zone.loc[zone["Y"] == zone.Y.unique()[xsec_user_xvals[i]]],zone.Y.unique()[xsec_user_xvals[i]]
+            aqconcfaces.update({'xsec_x_user_'+str(xsec_user_xvals[i]):xsec_x_user,'xsec_x_user_val'+str(xsec_user_xvals[i]):xsec_x_user_val})
+
+    if op_xsec_Y_user == True:
+        for i in list(range(len(xsec_user_yvals))):
+            xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
+            aqconcfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    return aqconcfaces
+
+def gas_volfrac_import():
+    """
+    Imports the gas_volfrac file, - problems with this
+    """
+
+    gas_volfracdata=pd.read_csv(cwd+'/gas_volfrac.tec',sep=r"\s*",skiprows=[0],usecols=[0,1,2,3],engine='python')
+    gas_volfracdata.loc[0]
+    gas_volfracdata=gas_volfracdata.rename(index=str,columns=gas_volfrac_names)
+    print(gas_volfracdata)
+    #Last time step - top, bottom, side walls
+    val=int(gas_volfracdata.loc[gas_volfracdata["X"] == 'Zone'][-1:].index[0])#value of the last time zone
+    lastval=int(gas_volfracdata.index[-1])
+    length=lastval - val #length of last time zone
+    zone=gas_volfracdata[val+1:lastval+1]
+
+    zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
+
+    top,tpval =zone.loc[zone["Z"] == max(zone.Z) ],max(zone.Z) #2D array of the top surface
+    bot,btval =zone.loc[zone["Z"] == min(zone.Z) ],min(zone.Z)#bottom surface
+    MaxY,MxYval=zone.loc[zone["Y"] == max(zone.Y) ],max(zone.Y)#MaxY face
+    MinY,MnYval=zone.loc[zone["Y"] == min(zone.Y) ],min(zone.Y)#MinY face
+    MaxX,MxXval=zone.loc[zone["X"] == max(zone.X) ],max(zone.X)#MaxX face
+    MinX,MnXval=zone.loc[zone["X"] == min(zone.X) ],min(zone.X)#MinX face
+
+    xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
+    xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+
+
+    gas_volfracfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
+           'tpval' : tpval, 'btval' : btval, 'MxYval' : MxYval, 'MnYval' : MnYval,
+               'MxXval' : MxXval, 'MnXval' : MnXval,'xsec_x_half':xsec_x,'xsec_x_half_val':xsec_x_val,
+              'xsec_y_half':xsec_y,'xsec_y_val_half':xsec_y_val}
+
+    if op_xsec_X_user == True:
+        for i in list(range(len(xsec_user_xvals))):
+            xsec_x_user,xsec_x_user_val=zone.loc[zone["Y"] == zone.Y.unique()[xsec_user_xvals[i]]],zone.Y.unique()[xsec_user_xvals[i]]
+            gas_volfracfaces.update({'xsec_x_user_'+str(xsec_user_xvals[i]):xsec_x_user,'xsec_x_user_val'+str(xsec_user_xvals[i]):xsec_x_user_val})
+
+    if op_xsec_Y_user == True:
+        for i in list(range(len(xsec_user_yvals))):
+            xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
+            gas_volfracfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    return gas_volfracfaces
+
+def mineral_ab_import():
+    """
+    Imports the mineral.tec file - mineral Abundances
+    """
+    mineral_ab_data=pd.read_csv(cwd+'/mineral.tec',sep=r"\s*",skiprows=[0],engine='python')
+    mineral_ab_data_modified= mineral_ab_data[mineral_ab_data.columns[:-1]]
+    mineral_ab_data_modified.columns = mineral_ab_data.columns[1:]
+
+    mineral_ab_data=mineral_ab_data_modified.rename(index=str,columns=min_name)
+
+    #Last time step - top, bottom, side walls
+    val=int(mineral_ab_data.loc[mineral_ab_data["X"] == 'Zone'][-1:].index[0])#value of the last time zone
+    lastval=int(mineral_ab_data.index[-1])
+    length=lastval - val #length of last time zone
+    zone=mineral_ab_data[val+1:lastval+1]
+
+    zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
+
+    top,tpval =zone.loc[zone["Z"] == max(zone.Z) ],max(zone.Z) #2D array of the top surface
+    bot,btval =zone.loc[zone["Z"] == min(zone.Z) ],min(zone.Z)#bottom surface
+    MaxY,MxYval=zone.loc[zone["Y"] == max(zone.Y) ],max(zone.Y)#MaxY face
+    MinY,MnYval=zone.loc[zone["Y"] == min(zone.Y) ],min(zone.Y)#MinY face
+    MaxX,MxXval=zone.loc[zone["X"] == max(zone.X) ],max(zone.X)#MaxX face
+    MinX,MnXval=zone.loc[zone["X"] == min(zone.X) ],min(zone.X)#MinX face
+
+    xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
+    xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+
+
+    mineral_ab_faces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
+           'tpval' : tpval, 'btval' : btval, 'MxYval' : MxYval, 'MnYval' : MnYval,
+               'MxXval' : MxXval, 'MnXval' : MnXval,'xsec_x_half':xsec_x,'xsec_x_half_val':xsec_x_val,
+              'xsec_y_half':xsec_y,'xsec_y_val_half':xsec_y_val}
+
+    if op_xsec_X_user == True:
+        for i in list(range(len(xsec_user_xvals))):
+            xsec_x_user,xsec_x_user_val=zone.loc[zone["Y"] == zone.Y.unique()[xsec_user_xvals[i]]],zone.Y.unique()[xsec_user_xvals[i]]
+            mineral_ab_faces.update({'xsec_x_user_'+str(xsec_user_xvals[i]):xsec_x_user,'xsec_x_user_val'+str(xsec_user_xvals[i]):xsec_x_user_val})
+
+    if op_xsec_Y_user == True:
+        for i in list(range(len(xsec_user_yvals))):
+            xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
+            mineral_ab_faces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    return mineral_ab_faces
+
+def mineral_si_import():
+    """
+    Imports the min_SI.tec file - mineral saturation index
+    """
+    mineral_si_data=pd.read_csv(cwd+'/mineral.tec',sep=r"\s*",skiprows=[0],engine='python')
+    mineral_si_data_modified= mineral_si_data[mineral_si_data.columns[:-1]]
+    mineral_si_data_modified.columns = mineral_si_data.columns[1:]
+
+    mineral_si_data=mineral_si_data_modified.rename(index=str,columns=min_name)
+
+    #Last time step - top, bottom, side walls
+    val=int(mineral_si_data.loc[mineral_si_data["X"] == 'Zone'][-1:].index[0])#value of the last time zone
+    lastval=int(mineral_si_data.index[-1])
+    length=lastval - val #length of last time zone
+    zone=mineral_si_data[val+1:lastval+1]
+
+    zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
+
+    top,tpval =zone.loc[zone["Z"] == max(zone.Z) ],max(zone.Z) #2D array of the top surface
+    bot,btval =zone.loc[zone["Z"] == min(zone.Z) ],min(zone.Z)#bottom surface
+    MaxY,MxYval=zone.loc[zone["Y"] == max(zone.Y) ],max(zone.Y)#MaxY face
+    MinY,MnYval=zone.loc[zone["Y"] == min(zone.Y) ],min(zone.Y)#MinY face
+    MaxX,MxXval=zone.loc[zone["X"] == max(zone.X) ],max(zone.X)#MaxX face
+    MinX,MnXval=zone.loc[zone["X"] == min(zone.X) ],min(zone.X)#MinX face
+
+    xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
+    xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+
+
+    mineral_si_faces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
+           'tpval' : tpval, 'btval' : btval, 'MxYval' : MxYval, 'MnYval' : MnYval,
+               'MxXval' : MxXval, 'MnXval' : MnXval,'xsec_x_half':xsec_x,'xsec_x_half_val':xsec_x_val,
+              'xsec_y_half':xsec_y,'xsec_y_val_half':xsec_y_val}
+
+    if op_xsec_X_user == True:
+        for i in list(range(len(xsec_user_xvals))):
+            xsec_x_user,xsec_x_user_val=zone.loc[zone["Y"] == zone.Y.unique()[xsec_user_xvals[i]]],zone.Y.unique()[xsec_user_xvals[i]]
+            mineral_si_faces.update({'xsec_x_user_'+str(xsec_user_xvals[i]):xsec_x_user,'xsec_x_user_val'+str(xsec_user_xvals[i]):xsec_x_user_val})
+
+    if op_xsec_Y_user == True:
+        for i in list(range(len(xsec_user_yvals))):
+            xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
+            mineral_si_faces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    return mineral_si_faces
 
 def corner_val_import():
     """
@@ -230,10 +403,6 @@ def corner_val_import():
         vals=df1.values.reshape(len(corner_z),len(corner_y),len(corner_x))
 
     return vals
-
-
-
-
 
 def stress_strain_import():
     """
@@ -282,14 +451,12 @@ def stress_strain_import():
 
     return stressfaces
 
-
 def face_choose(axis1,axis2,param):
   """
   Returns a shapped array based on the input parameter (e.g. porosity) for the face (e.g. top face)
   """
   face_data=np.reshape(param.values,(len(axis1.unique()),len(axis2.unique())))
   return face_data
-
 
 def plot_pcolormesh(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,rotate):
     """
@@ -304,7 +471,10 @@ def plot_pcolormesh(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,
                         %{'name':name,'surlabel':surlabel,'name2':name2,'data':data,'min':np.min(facedata),
                           'max':np.max(facedata),'mean':np.mean(facedata) }),pad=15)
     print ("axis1",axis1.size,"axis2",axis2.size,"facedata",facedata.size)
-    c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet', vmin=np.min(facedata), vmax=np.max(facedata))
+    if colored_cells_log_plot ==True:
+        c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',norm=colors.LogNorm(vmin=np.min(facedata), vmax=np.max(facedata)))
+    if colored_cells_log_plot==False:
+        c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',vmin=np.min(facedata), vmax=np.max(facedata))
     ax.set_xlabel('%(xlabel)s'%{'xlabel':xlabel})
     ax.set_ylabel('%(ylabel)s'%{'ylabel':ylabel})
     cbar=fig.colorbar(c, ax=ax)
@@ -334,7 +504,6 @@ def plot_contour(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,rot
     ax.set_ylabel('%(ylabel)s'%{'ylabel':ylabel})
     ax.clabel(cont,fmt='%1.1e')
     return fig,ax
-
 
 def plot_flowvectors_no_cont(axis1,axis2,axis3,axis4,facedata,data,name,name2,surlabel,xlabel,ylabel,rotate):
     """
@@ -395,11 +564,15 @@ def plot_flowvectors_cont(axis1,axis2,axis3,axis4,facedata,data,name,name2,surla
     return fig,ax
 
 
-
 flowdata_params=[]
 flowvector_params=[]
 displacement_params=[]
 stress_strain_params=[]
+gas_volfrac_params=[]
+aqconc_params=[]
+min_si_params=[]
+min_ab_params=[]
+
 
 if op_Porosity				== True:flowdata_params.append('Porosity')
 if op_Perm_X				== True:flowdata_params.append('Perm_X(m2)')
@@ -469,8 +642,29 @@ if op_E_fail_xz2			== True:stress_strain_params.append('E_fail_xz2')
 if op_E_fail_xy2			== True:stress_strain_params.append('E_fail_xy2')
 if op_E_fail_vol			== True:stress_strain_params.append('E_fail_vol')
 
+def aqconc_params_selector():
+    for key,value in aqconc_variable.items():
+        if value==True:
+            aqconc_params.append(key)
+    return aqconc_params
 
+def gas_volfrac_params_selector():
+    for key,value in gas_volfrac_variable.items():
+        if value==True:
+            gas_volfrac_params.append(key)
+    return gas_volfrac_params
 
+def min_si_params_selector():
+    for key,value in min_si_variable.items():
+        if value==True:
+            min_si_params.append(key)
+    return min_si_params
+
+def min_ab_params_selector():
+    for key,value in min_ab_variable.items():
+        if value==True:
+            min_ab_params.append(key)
+    return min_ab_params
 
 def corner_point_vals():
     """
@@ -527,13 +721,10 @@ def corner_point_vals():
 
     return cpvs
 
-
-
 def centre_vals(axis):
     """Short function that simply returns the unique values of an axis - typically the centre cordinate values"""
     centre=axis.unique()
     return centre
-
 
 def plotting(faces,name,name2,surlabel,dim1,dim2,xlabel,ylabel,data,rotate):
     """
@@ -623,7 +814,6 @@ def pdfplotting(faces,params,file_name):
                     plt.close('all')
     pp.close()
 
-
 def pngplotting(faces,params):
     """
     Save the figure output to a png file in a sub folder called 'trexplot_output_pngs' in the current working directory.
@@ -698,46 +888,46 @@ def fig_return(faces,params):
                 fig_dictionary.update({'fig_Top'+str(i)+key:value})
     if op_Bot == True:
         for i in list(params):
-             for b in plotting(faces      ,'Bot'        ,'btval'          ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False):
-                fig_dictionary.update({'fig_Bot'+str(i)+b.key():b})
+             for key,value in plotting(faces      ,'Bot'        ,'btval'          ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
+                fig_dictionary.update({'fig_Bot'+str(i)+key:value})
     if op_Max_Y== True:
         for i in list(params):
-             for b in plotting(faces      ,'Max-Y'      ,'MxYval'         ,'Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                fig_dictionary.update({'fig_Max-Y'+str(i)})
+             for key,value in plotting(faces      ,'Max-Y'      ,'MxYval'         ,'Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                fig_dictionary.update({'fig_Max-Y'+str(i)+key:value})
     if op_Min_Y== True:
         for i in list(params):
-             for b in plotting(faces      ,'Min-Y'      ,'MnYval'         ,'Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                fig_dictionary.update({'fig_Min-Y'+str(i)})
+             for key,value in plotting(faces      ,'Min-Y'      ,'MnYval'         ,'Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                fig_dictionary.update({'fig_Min-Y'+str(i)+key:value})
     if op_Max_X== True:
         for i in list(params):
-             for b in plotting(faces      ,'Max-X'      ,'MxXval'         ,'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                fig_dictionary.update({'fig_Max-X'+str(i)})
+             for key,value in plotting(faces      ,'Max-X'      ,'MxXval'         ,'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                fig_dictionary.update({'fig_Max-X'+str(i)+key:value})
     if op_Min_X== True:
         for i in list(params):
-             for b in plotting(faces      ,'Min-X'      ,'MnXval'         ,'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                fig_dictionary.update({'fig_Min-X'+str(i)})
+             for key,value in plotting(faces      ,'Min-X'      ,'MnXval'         ,'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                fig_dictionary.update({'fig_Min-X'+str(i)+key:value})
     if op_xsec_Y_half == True:
         for i in list(params):
-             for b in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True):
-                fig_dictionary.update({'fig_xsec_y_half'+str(i)})
+             for key,value in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True).items():
+                fig_dictionary.update({'fig_xsec_y_half'+str(i)+key:value})
     if op_xsec_X_half == True:
         for i in list(params):
-             for b in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ):
-                fig_dictionary.update({'fig_xsec_x_half'+str(i)})
+             for key,value in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                fig_dictionary.update({'fig_xsec_x_half'+str(i)+key:value})
     if op_xsec_X_user  == True:
         for a in list(range(len(xsec_user_xvals))):
             for i in list(params):
-                 for b in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
+                 for key,value in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
                                         'xsec_x_user_val'+str(xsec_user_xvals[a]),
-                                   'Y=','Z','X','X(m)','Z(m)',i,rotate=False ):
-                    fig_dictionary.update({'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i)})
+                                   'Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                    fig_dictionary.update({'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i)+key:value})
     if op_xsec_Y_user  == True:
         for a in list(range(len(xsec_user_yvals))):
             for i in list(params):
-                for b in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
+                for key,value in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
                                     'xsec_y_user_val'+str(xsec_user_yvals[a]),
-                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                    fig_dictionary.update({'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i)})
+                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                    fig_dictionary.update({'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i)+key:value})
     return fig_dictionary
 
 def main():
@@ -779,6 +969,47 @@ def main():
         if op_pdf==True:
             stress_strain_fig=fig_return(flowfaces,flowdata_params)
             return stress_strain_fig
+    if op_aqconc==True:
+        aqconcfaces=aq_conc_import()
+        aqconc_params=aqconc_params_selector()
+        if op_png==True:
+            pngplotting(aqconcfaces,aqconc_params)
+        if op_pdf==True:
+            pdfplotting(aqconcfaces,aqconc_params,cwd+"/aq_conc.pdf")
+        if op_fig==True:
+            aqconcfig=fig_return(aqconcfaces,aqconc_params)
+            return aqconcfig
+    if op_gas_volfrac==True:
+        gas_volfrac_faces=gas_volfrac_import()
+        gas_volfrac_params=gas_volfrac_params_selector()
+        if op_png==True:
+            pngplotting(gas_volfrac_faces,gas_volfrac_params)
+        if op_pdf==True:
+            pdfplotting(gas_volfrac_faces,gas_volfrac_params,cwd+"/gas_volfrac.pdf")
+        if op_fig==True:
+            gas_volfrac_fig=fig_return(gas_volfrac_faces,gas_volfrac_params)
+            return gas_volfrac_fig
+    if op_min_si==True:
+        min_si_faces=min_si_import()
+        min_si_params=min_si_params_selector()
+        if op_png==True:
+            pngplotting(min_si_faces,min_si_params)
+        if op_pdf==True:
+            pdfplotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
+        if op_fig==True:
+            min_si_fig=fig_return(min_si_faces,min_si_params)
+            return min_si_fig
+    if op_min_ab==True:
+        min_ab_faces=min_ab_import()
+        min_ab_params=min_ab_params_selector()
+        if op_png==True:
+            pngplotting(min_ab_faces,min_ab_params)
+        if op_pdf==True:
+            pdfplotting(min_ab_faces,min_ab_params,cwd+"/min_ab.pdf")
+        if op_fig==True:
+            min_ab_fig=fig_return(min_ab_faces,min_ab_params)
+            return min_ab_fig
+
 
 if __name__ == "__main__":
     main()
