@@ -758,59 +758,59 @@ def pdfplotting(faces,params,file_name):
     pp=PdfPages(filename=file_name)
     if op_Top == True:
         for i in list(params):
-            for b in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False):
-                pp.savefig(b)
+            for key,value in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_Bot == True:
         for i in list(params):
-            for b in plotting(faces      ,'Bot'  ,'btval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False):
-                pp.savefig(b)
+            for key,value in plotting(faces      ,'Bot'  ,'btval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_Max_Y== True:
         for i in list(params):
-            for b in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                pp.savefig(b)
+            for b in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_Min_Y== True:
         for i in list(params):
-            for b in plotting(faces      ,'Min-Y','MnYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                pp.savefig(b)
+            for key,value in plotting(faces      ,'Min-Y','MnYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_Max_X== True:
         for i in list(params):
-            for b in plotting(faces      ,'Max-X','MxXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                pp.savefig(b)
+            for key,value in plotting(faces      ,'Max-X','MxXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_Min_X== True:
         for i in list(params):
-            for b in plotting(faces      ,'Min-X','MnXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                pp.savefig(b)
+            for key,value in plotting(faces      ,'Min-X','MnXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_xsec_Y_half == True:
         for i in list(params):
-            for a in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ) :
-                pp.savefig(a)
+            for key,value in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items() :
+                pp.savefig(value[0])
                 plt.close('all')
     if op_xsec_X_half == True:
         for i in list(params):
-            for a in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ):
-                pp.savefig(a)
+            for key,value in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                pp.savefig(value[0])
                 plt.close('all')
     if op_xsec_X_user  == True:
         for a in list(range(len(xsec_user_xvals))):
             for i in list(params):
-                for b in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
+                for key,value in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
                                 'xsec_x_user_val'+str(xsec_user_xvals[a]),
-                                'Y=','Z','X','X(m)','Z(m)',i,rotate=False ):
-                    pp.savefig(b)
+                                'Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                    pp.savefig(value[0])
                     plt.close('all')
     if op_xsec_Y_user  == True:
         for a in list(range(len(xsec_user_yvals))):
             for i in list(params):
-                for b in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
+                for key,value in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
                                     'xsec_y_user_val'+str(xsec_user_yvals[a]),
-                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                    pp.savefig(b)
+                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                    pp.savefig(value[0])
                     plt.close('all')
     pp.close()
 
@@ -820,59 +820,59 @@ def pngplotting(faces,params):
     """
     if op_Top == True:
         for i in list(params):
-            for b in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Top'+str(i))
+            for key,value in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Top'+str(i))
                 plt.close('all')
     if op_Bot == True:
         for i in list(params):
-            for b in plotting(faces      ,'Bot'  ,'btval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Bot'+str(i))
+            for key,value in plotting(faces      ,'Bot'  ,'btval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Bot'+str(i))
                 plt.close('all')
     if op_Max_Y== True:
         for i in list(params):
-            for b in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Max-Y'+str(i))
+            for key,value in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-Y'+str(i))
                 plt.close('all')
     if op_Min_Y== True:
         for i in list(params):
-            for b in plotting(faces      ,'Min-Y','MnYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Min-Y'+str(i))
+            for key,value in plotting(faces      ,'Min-Y','MnYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-Y'+str(i))
                 plt.close('all')
     if op_Max_X== True:
         for i in list(params):
-            for b in plotting(faces      ,'Max-X','MxXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Max-X'+str(i))
+            for key,value in plotting(faces      ,'Max-X','MxXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-X'+str(i))
                 plt.close('all')
     if op_Min_X== True:
         for i in list(params):
-            for b in plotting(faces      ,'Min-X','MnXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'Min-X'+str(i))
+            for key,value in plotting(faces      ,'Min-X','MnXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-X'+str(i))
                 plt.close('all')
     if op_xsec_Y_half == True:
         for i in list(params):
-            for b in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_half'+str(i)):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'xsec_y_half'+str(i))
+            for key,value in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_y_half'+str(i))
                 plt.close('all')
     if op_xsec_X_half == True:
         for i in list(params):
-            for b in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ).savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_x_half'+str(i)):
-                b.savefig(cwd+'/trexplot_output_pngs/'+'xsec_x_half'+str(i))
+            for key,value in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_x_half'+str(i))
                 plt.close('all')
     if op_xsec_X_user  == True:
         for a in list(range(len(xsec_user_xvals))):
             for i in list(params):
-                for b in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
+                for key,value in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
                                     'xsec_x_user_val'+str(xsec_user_xvals[a]),
-                                   'Y=','Z','X','X(m)','Z(m)',i,rotate=False ):
-                    b.savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i))
+                                   'Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
+                    value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i))
                 plt.close('all')
     if op_xsec_Y_user  == True:
         for a in list(range(len(xsec_user_yvals))):
             for i in list(params):
-                for b in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
+                for key,value in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
                                     'xsec_y_user_val'+str(xsec_user_yvals[a]),
-                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ):
-                    b.savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i))
+                                    'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
+                    value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i))
                 plt.close('all')
 
 def fig_return(faces,params):

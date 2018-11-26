@@ -10,8 +10,8 @@ op_corner_y=[2,4,10]
 op_corner_z=[1,2,3.4,3.6,3.8,4,7,8]
 
 #Output
-op_png					= False   #output  png files
-op_pdf					= False  #output pdfs
+op_png					= True   #output  png files
+op_pdf					= True  #output pdfs
 op_fig					= True   #return figure files
 
 #Plot types
@@ -38,8 +38,8 @@ op_min_ab               = True
 
 
 #Faces
-op_Top					= False   #output top surface
-op_Bot					= False  #output bottom surface
+op_Top					= True   #output top surface
+op_Bot					= True  #output bottom surface
 op_Max_Y				= False  #output y-plane along the maximum value of x surface
 op_Min_Y				= False	 #output y-plane along the minimum value of x surface
 op_Max_X				= False	 #output x-plane along the maximum value of y surface
