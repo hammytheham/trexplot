@@ -388,8 +388,7 @@ def corner_val_import():
 
         zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
         zone['xyz'] = list(zip(zone.X,zone.Y,zone.Z))
-        vals=zone.xyz.values.reshape(len(zone.X.unique()),len(zone.Y.unique()),len(zone.Z.unique()))
-
+        vals=zone.xyz.values.reshape(len(zone.Z.unique()),len(zone.Y.unique()),len(zone.X.unique()))
     if op_corner == True:
         corner_x=op_corner_x
         corner_y=op_corner_y
@@ -462,6 +461,9 @@ def plot_pcolormesh(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,
     """
     Plots parameter values for each cell using the pcolormesh function. Uses the corner point values output by corner_point_vals()
     """
+    if info==True:
+        print ('Making pcolormesh (colored_cells) of %(name)s surface (%(surlabel)s %(name2).1f) - %(data)s '
+                        %{'name':name,'surlabel':surlabel,'name2':name2,'data':data })
     if rotate == True:
         axis2,axis1 = np.meshgrid(axis1,axis2)
     else:
@@ -470,9 +472,13 @@ def plot_pcolormesh(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,
     ax.set_title(label=('%(name)s surface (%(surlabel)s %(name2).1f) - %(data)s - min/max/mean (%(min).4e /%(max).4e / %(mean).2e) '
                         %{'name':name,'surlabel':surlabel,'name2':name2,'data':data,'min':np.min(facedata),
                           'max':np.max(facedata),'mean':np.mean(facedata) }),pad=15)
-    print ("axis1",axis1.size,"axis2",axis2.size,"facedata",facedata.size)
     if colored_cells_log_plot ==True:
-        c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',norm=colors.LogNorm(vmin=np.min(facedata), vmax=np.max(facedata)))
+        if np.min(facedata) <= 0:
+            print('np.min(facedata) <  0 - cant log a negative number or zero values - non-log plot is now displayed for %(name)s surface (%(surlabel)s %(name2).1f) - %(data)s - min/max/mean (%(min).4e /%(max).4e / %(mean).2e) '
+                                %{'name':name,'surlabel':surlabel,'name2':name2,'data':data,'min':np.min(facedata),'max':np.max(facedata),'mean':np.mean(facedata) } )
+            c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',vmin=np.min(facedata), vmax=np.max(facedata))
+        else:
+            c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',norm=colors.LogNorm(vmin=np.min(facedata), vmax=np.max(facedata)))
     if colored_cells_log_plot==False:
         c=ax.pcolormesh(axis1,axis2,facedata,edgecolors='k',cmap='jet',vmin=np.min(facedata), vmax=np.max(facedata))
     ax.set_xlabel('%(xlabel)s'%{'xlabel':xlabel})
@@ -487,6 +493,9 @@ def plot_contour(axis1,axis2,facedata,data,name,name2,surlabel,xlabel,ylabel,rot
     Plots contours of the parameter values. Uses the centre of cell cordinates.
     Optionally, easily could overlay this output ontop of plot_colormesh
     """
+    if info==True:
+        print ('Making contour of %(name)s surface (%(surlabel)s %(name2).1f) - %(data)s '
+                    %{'name':name,'surlabel':surlabel,'name2':name2,'data':data })
 
     if rotate == True:
         axis2,axis1 = np.meshgrid(axis1,axis2)
@@ -510,6 +519,10 @@ def plot_flowvectors_no_cont(axis1,axis2,axis3,axis4,facedata,data,name,name2,su
     Following based on this: https://stackoverflow.com/questions/25342072/computing-and-drawing-vector-fields
     Uses both the centre (or corner for displacement) values (graident function) and the corner values (plotting) for constructing the quiver plot
     """
+    if info==True:
+        print ('Making flow vectors no-contour of %(name)s surface (%(surlabel)s %(name2).1f) - %(data)s '
+                    %{'name':name,'surlabel':surlabel,'name2':name2,'data':data })
+
     if rotate == True:
         dy,dx=np.gradient(facedata, axis2, axis1)
         axis4,axis3 = np.meshgrid(axis3,axis4)
@@ -537,6 +550,10 @@ def plot_flowvectors_cont(axis1,axis2,axis3,axis4,facedata,data,name,name2,surla
     Uses both the centre (or corner for displacement) values (graident function) and the corner values (plotting) for constructing the quiver plot
     Overlay of contours of the parameter data. Not of the gradient.
     """
+
+    if info==True:
+        print ('Making flow vectors contour of %(name)s surface (%(surlabel)s %(name2).1f) - %(data)s '
+                    %{'name':name,'surlabel':surlabel,'name2':name2,'data':data })
 
     if rotate == True:
         dy,dx=np.gradient(facedata, axis2, axis1)
@@ -756,7 +773,6 @@ def pdfplotting(faces,params,file_name):
     Writes the resulting figure to the pdf file.
     """
     pp=PdfPages(filename=file_name)
-    print(file_name)
     if op_Top == True:
         for i in list(params):
             for key,value in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
@@ -944,6 +960,8 @@ def main():
     min_si_fig=None
     min_ab_fig=None
     if op_Flowdata==True:
+        if info==True:
+            print('Running flowdata.tec')
         flowfaces=flowdata_import()
         if op_png==True:
             pngplotting(flowfaces,flowdata_params)
@@ -952,7 +970,8 @@ def main():
         if op_fig==True:
             flowfig=fig_return(flowfaces,flowdata_params)
     if op_Flowvector==True:
-        print (op_Flowvector)
+        if info==True:
+            print('Running flowvector.tec')
         flowvecfaces=flowvector_import()
         if op_png==True:
             pngplotting(flowvecfaces,flowvector_params)
@@ -961,6 +980,8 @@ def main():
         if op_fig==True:
             flowvecfig=fig_return(flowfaces,flowdata_params)
     if op_Displacement==True:
+        if info==True:
+            print('Running displacement.tec')
         dispfaces=displace_import()
         if op_png==True:
             pngplotting(dispfaces,displacement_params)
@@ -969,6 +990,8 @@ def main():
         if op_fig==True:
             dispfig=fig_return(flowfaces,flowdata_params)
     if op_Stress_Strain==True:
+        if info==True:
+            print('Running stress_strain.tec')
         stressfaces=stress_strain_import()
         if op_png==True:
             pngplotting(stressfaces,stress_strain_params)

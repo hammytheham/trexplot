@@ -9,6 +9,8 @@ op_corner_x=[1,2,3,6,8]
 op_corner_y=[2,4,10]
 op_corner_z=[1,2,3.4,3.6,3.8,4,7,8]
 
+info                    =True #Runtime progress info for user
+
 #Output
 op_png					= False   #output  png files
 op_pdf					= True  #output pdfs
