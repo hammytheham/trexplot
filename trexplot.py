@@ -756,6 +756,7 @@ def pdfplotting(faces,params,file_name):
     Writes the resulting figure to the pdf file.
     """
     pp=PdfPages(filename=file_name)
+    print(file_name)
     if op_Top == True:
         for i in list(params):
             for key,value in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
@@ -934,7 +935,14 @@ def main():
     """
     The main script which runs when you call trexplot.py from the commandline
     """
-
+    flowfig=None
+    flowvecfig=None
+    dispfig=None
+    stress_strain_fig=None
+    aqconcfig=None
+    gas_volfrac_fig=None
+    min_si_fig=None
+    min_ab_fig=None
     if op_Flowdata==True:
         flowfaces=flowdata_import()
         if op_png==True:
@@ -943,8 +951,8 @@ def main():
             pdfplotting(flowfaces,flowdata_params,cwd+"/flow_data.pdf")
         if op_fig==True:
             flowfig=fig_return(flowfaces,flowdata_params)
-            return flowfig
     if op_Flowvector==True:
+        print (op_Flowvector)
         flowvecfaces=flowvector_import()
         if op_png==True:
             pngplotting(flowvecfaces,flowvector_params)
@@ -952,7 +960,6 @@ def main():
             pdfplotting(flowvecfaces,flowvector_params,cwd+"/flow_vector.pdf")
         if op_fig==True:
             flowvecfig=fig_return(flowfaces,flowdata_params)
-            return flowvecfig
     if op_Displacement==True:
         dispfaces=displace_import()
         if op_png==True:
@@ -961,14 +968,14 @@ def main():
             pdfplotting(dispfaces,displacement_params,cwd+"/displacement.pdf")
         if op_fig==True:
             dispfig=fig_return(flowfaces,flowdata_params)
-            return dispfig
     if op_Stress_Strain==True:
         stressfaces=stress_strain_import()
         if op_png==True:
             pngplotting(stressfaces,stress_strain_params)
         if op_pdf==True:
-            stress_strain_fig=fig_return(flowfaces,flowdata_params)
-            return stress_strain_fig
+            pdfplotting(stressfaces,stress_strain_params,cwd+"/stress_strain.pdf")
+        if op_fig==True:
+            stress_strain_fig=fig_return(stressfaces,stress_strain_params)
     if op_aqconc==True:
         aqconcfaces=aq_conc_import()
         aqconc_params=aqconc_params_selector()
@@ -978,7 +985,6 @@ def main():
             pdfplotting(aqconcfaces,aqconc_params,cwd+"/aq_conc.pdf")
         if op_fig==True:
             aqconcfig=fig_return(aqconcfaces,aqconc_params)
-            return aqconcfig
     if op_gas_volfrac==True:
         gas_volfrac_faces=gas_volfrac_import()
         gas_volfrac_params=gas_volfrac_params_selector()
@@ -988,7 +994,6 @@ def main():
             pdfplotting(gas_volfrac_faces,gas_volfrac_params,cwd+"/gas_volfrac.pdf")
         if op_fig==True:
             gas_volfrac_fig=fig_return(gas_volfrac_faces,gas_volfrac_params)
-            return gas_volfrac_fig
     if op_min_si==True:
         min_si_faces=min_si_import()
         min_si_params=min_si_params_selector()
@@ -998,7 +1003,6 @@ def main():
             pdfplotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
         if op_fig==True:
             min_si_fig=fig_return(min_si_faces,min_si_params)
-            return min_si_fig
     if op_min_ab==True:
         min_ab_faces=min_ab_import()
         min_ab_params=min_ab_params_selector()
@@ -1008,7 +1012,8 @@ def main():
             pdfplotting(min_ab_faces,min_ab_params,cwd+"/min_ab.pdf")
         if op_fig==True:
             min_ab_fig=fig_return(min_ab_faces,min_ab_params)
-            return min_ab_fig
+
+    return flowfig, flowvecfig, dispfig, stress_strain_fig, aqconcfig, gas_volfrac_fig, min_si_fig, min_ab_fig
 
 
 if __name__ == "__main__":

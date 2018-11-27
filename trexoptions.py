@@ -10,7 +10,7 @@ op_corner_y=[2,4,10]
 op_corner_z=[1,2,3.4,3.6,3.8,4,7,8]
 
 #Output
-op_png					= True   #output  png files
+op_png					= False   #output  png files
 op_pdf					= True  #output pdfs
 op_fig					= True   #return figure files
 
@@ -21,19 +21,18 @@ flow_vectors_no_cont	=True
 flow_vectors_cont		=True
 
 #log plot option - choose True to set the plot data to log
-colored_cells_log_plot  =True  #coloured cells log plot
+colored_cells_log_plot  =False  #coloured cells log plot
 
 
 #Files
 op_Flowdata				= True	 #readin flowdata files
-op_Flowvector			= False	 #readin flowvector files
-op_Displacement			= False	 #note the xsection half values
-								 #are one 'ahead' as extra value. User no addition
-op_Stress_Strain		= False	 #readin stress_strain files
-op_aqconc               = True
-op_gas_volfrac          = True
-op_min_si               = True
-op_min_ab               = True
+op_Flowvector			= True	 #readin flowvector files
+op_Displacement			= True	 #note the xsection half values are one 'ahead' as extra value. User no addition
+op_Stress_Strain		= True	 #readin stress_strain files
+op_aqconc               = False
+op_gas_volfrac          = False
+op_min_si               = False
+op_min_ab               = False
 
 
 
@@ -78,10 +77,10 @@ op_DBlk					= False
 op_Tdif					= False
 
 #Flowvector Variables
-op_FluxLiq				= False
+op_FluxLiq				= True
 op_FluxLiq_X			= False
 op_FluxLiq_Y			= False
-op_FluxLiq_Z			= False
+op_FluxLiq_Z			= True
 op_PorVelLiq			= False
 op_PorVelLiqX			= False
 op_PorVelLiqY			= False
@@ -91,7 +90,7 @@ op_FluxGas_X			= False
 op_FluxGas_Y			= False
 op_FluxGas_Z			= False
 op_PorVelGas			= False
-op_PorVelGasX			= False
+op_PorVelGasX			= True
 op_PorVelGasY			= False
 op_PorVelGasZ			= False
 op_HeatFlux				= False
@@ -100,18 +99,18 @@ op_HeatFlux_Y			= False
 op_HeatFlux_Z			= False
 
 #Displacement variables
-op_Disp_x				= False
-op_Disp_y				= False
+op_Disp_x				= True
+op_Disp_y				= True
 op_Disp_z				= False
 
 #Stress Strain variables
-op_Sigma_xx				= False
-op_Sigma_yy				= False
-op_Sigma_zz				= False
+op_Sigma_xx				= True
+op_Sigma_yy				= True
+op_Sigma_zz				= True
 op_Sigma_yz				= False
 op_Sigma_xz				= False
 op_Sigma_xy				= False
-op_Strain_xx			= False
+op_Strain_xx			= True
 op_Strain_yy			= False
 op_Strain_zz			= False
 op_Strain_yz			= False
@@ -120,7 +119,7 @@ op_Strain_xy			= False
 op_Vol_Strain			= False
 op_E_fail_xx			= False
 op_E_fail_yy			= False
-op_E_fail_zz			= False
+op_E_fail_zz			= True
 op_E_fail_yz2			= False
 op_E_fail_xz2			= False
 op_E_fail_xy2			= False
