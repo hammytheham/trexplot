@@ -18,7 +18,7 @@ We supply a set of example .tec files. Move the TestFiles folder somewhere else.
 
 `cd` into the TestFiles folder.
 
-run `ipython ../Trexplot/trexplot.py`
+run `ipython SOME-PATH/Trexplot/trexplot.py`
 
 This will use the trexoptions file which controls plotting located in this folder. The trex options supplied by default has all options turned on including for all .tec files.
 
