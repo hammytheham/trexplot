@@ -27,15 +27,14 @@ colored_cells_log_plot  =True  #coloured cells log plot
 
 
 #Files
-op_Flowdata				= True	 #readin flowdata files
-op_Flowvector			= True	 #readin flowvector files
-op_Displacement			= True	 #note the xsection half values are one 'ahead' as extra value. User no addition
-op_Stress_Strain		= True	 #readin stress_strain files
-op_aqconc               = True   #readin aqconc file
-op_gas_volfrac          = True  #readin gas_volfrac file
+op_Flowdata				= False	 #readin flowdata files
+op_Flowvector			= False	 #readin flowvector files
+op_Displacement			= False	 #note the xsection half values are one 'ahead' as extra value. User no addition
+op_Stress_Strain		= False	 #readin stress_strain files
+op_aqconc               = False   #readin aqconc file
+op_gas_volfrac          = False  #readin gas_volfrac file
 op_min_ab               = True  #readin mineral saturation
 op_min_si               = True  #readin absolute values of minerals
-op_Plasticity           = True
 
 #Faces
 op_Top					= True   #output top surface
@@ -176,16 +175,16 @@ gas_volfrac_variable={'Pressure(bar)':True,
 #Import params and variable print settings for mineral.tec.
 # Order matters
 min_ab_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"Porosity"':"Porosity",
-            '"Poros_Chg"':"Poros_Chg",'"Permx(m^2)"':"Permx(m^2)",'"Kx/Kx0"':"Kx/Kx0", '"Permz(m^2)"':"Permz(m^2)",
-            '"Kz/Kz0"':"Kz/Kz0",'"dolomite"':"dolomite",'"calcite"':"calcite"}
+            '"Poros_Chg"':"Poros_Chg",'"Permx(m^2)"':"Permx(m^2)",'"Kx/Kx0"':"Kx_Kx0", '"Permz(m^2)"':"Permz(m^2)",
+            '"Kz/Kz0"':"Kz_Kz0",'"dolomite"':"dolomite",'"calcite"':"calcite"}
 
 #Order doesnt matter
 min_ab_variable={'Porosity':True,
             'Poros_Chg':True,
             'Permx(m^2)':True,
-            'Kx/Kx0':True,
+            'Kx_Kx0':True,
             'Permz(m^2)':True,
-            'Kz/Kz0':True,
+            'Kz_Kz0':True,
             'dolomite':True,
             'calcite':True}
 
