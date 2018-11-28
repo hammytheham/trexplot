@@ -143,7 +143,7 @@ aqconc_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"P(bar)"':"Pressure(bar)
             '"t_al+3"':"t_al+3",'"t_h4sio4"':"t_h4sio4",'"t_k+"':"t_k+"}
 
 #Order doesn't matter
-aqconc_variable={'Pressure(Pa)':True,
+aqconc_variable={'Pressure(bar)':True,
             'Temperature(C)':True,
             'SatGas':True,
             'SatLiq':True,
