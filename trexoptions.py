@@ -35,6 +35,7 @@ op_aqconc               = False   #readin aqconc file
 op_gas_volfrac          = False  #readin gas_volfrac file
 op_min_ab               = True  #readin mineral saturation
 op_min_si               = True  #readin absolute values of minerals
+# op_Plasticity           = True # not currently used
 
 #Faces
 op_Top					= True   #output top surface
