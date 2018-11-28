@@ -12,20 +12,20 @@ op_corner_z=[1,2,3.4,3.6,3.8,4,7,8]
 info                    =True #Runtime progress info for user. Warnings on negative log plots are not included
 
 #Output
-op_png					= True   #output  png files
+op_png					= False   #output  png files
 op_pdf					= True  #output pdfs
-op_fig					= True   #return figure files
+op_fig					= False   #return figure files
 
 #Plot types
 colored_cells			=True
-colored_cells_log_plot  =True  #coloured cells log plot
-contour_plot			=True
+colored_cells_log_plot  =False  #log the coloured cells plot
+contour_plot			=False
 flow_vectors_no_cont	=True
 flow_vectors_cont		=True
 
 
 #Files
-op_Flowdata				= False	 #readin flowdata files
+op_Flowdata				= True	 #readin flowdata files
 op_Flowvector			= False	 #readin flowvector files
 op_Displacement			= False	 #note the xsection half values are one 'ahead' as extra value. User no addition
 op_Stress_Strain		= False	 #readin stress_strain files

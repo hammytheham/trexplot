@@ -771,6 +771,14 @@ def plotting(faces,name,name2,surlabel,dim1,dim2,xlabel,ylabel,data,rotate):
     f=corner_point_vals()[str(name+'_'+dim2)]
     h=centre_vals(faces[name][dim1])#cell centres (flowdata,vector etc) or edges (displacement)
     j=centre_vals(faces[name][dim2])
+    fig_pcolor = None
+    axes_pcolor = None
+    fig_contour = None
+    axes_contour = None
+    fig_vectors_no_cont = None
+    axes_vectors_no_cont = None
+    fig_vectors_cont = None
+    axes_vectors_cont = None
     if colored_cells==True:
         fig_pcolor,axes_pcolor=plot_pcolormesh(f,c,a,data,name,faces[name2],surlabel,xlabel,ylabel,rotate)
     if contour_plot==True:
@@ -781,6 +789,7 @@ def plotting(faces,name,name2,surlabel,dim1,dim2,xlabel,ylabel,data,rotate):
         fig_vectors_cont,axes_vectors_cont=plot_flowvectors_cont(j,h,f,c,a,data,name,faces[name2],surlabel,xlabel,ylabel,rotate)
     figdict={'pcolor':[fig_pcolor,axes_pcolor],'contour':[fig_contour,axes_contour],
             'vectors_no_cont':[fig_vectors_no_cont,axes_vectors_no_cont],'vectors_cont':[fig_vectors_cont,axes_vectors_cont]}
+
     return figdict
 
 def pdf_png_fig_plotting(faces,params,file_name):
@@ -797,109 +806,119 @@ def pdf_png_fig_plotting(faces,params,file_name):
     if op_Top == True:
         for i in list(params):
             for key,value in plotting(faces      ,'Top'  ,'tpval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Top'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Top'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Top'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Top'+str(i)+key:value})
+                    plt.close('all')
     if op_Bot == True:
         for i in list(params):
             for key,value in plotting(faces      ,'Bot'  ,'btval' ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Bot'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Bot'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Bot'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Bot'+str(i)+key:value})
+                    plt.close('all')
     if op_Max_Y== True:
         for i in list(params):
             for b in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-Y'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Max-Y'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-Y'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Max-Y'+str(i)+key:value})
+                    plt.close('all')
     if op_Min_Y== True:
         for i in list(params):
             for key,value in plotting(faces      ,'Min-Y','MnYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-Y'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Min-Y'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-Y'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Min-Y'+str(i)+key:value})
+                    plt.close('all')
     if op_Max_X== True:
         for i in list(params):
             for key,value in plotting(faces      ,'Max-X','MxXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-X'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Max-X'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Max-X'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Max-X'+str(i)+key:value})
+                    plt.close('all')
     if op_Min_X== True:
         for i in list(params):
             for key,value in plotting(faces      ,'Min-X','MnXval','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-X'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_Min-X'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'Min-X'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_Min-X'+str(i)+key:value})
+                    plt.close('all')
     if op_xsec_Y_half == True:
         for i in list(params):
             for key,value in plotting(faces      ,'xsec_y_half','xsec_y_val_half','X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items() :
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_y_half'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_xsec_y_half'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_y_half'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_xsec_y_half'+str(i)+key:value})
+                    plt.close('all')
     if op_xsec_X_half == True:
         for i in list(params):
             for key,value in plotting(faces      ,'xsec_x_half','xsec_x_half_val','Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
-                if op_pdf==True:
-                    pp.savefig(value[0])
-                if op_png==True:
-                    value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_x_half'+str(i))
-                if op_fig==True:
-                    fig_dictionary.update({'fig_xsec_x_half'+str(i)+key:value})
-                plt.close('all')
+                if value!=[None, None]:
+                    if op_pdf==True:
+                        pp.savefig(value[0])
+                    if op_png==True:
+                        value[0].savefig(cwd+'/trexplot_output_pngs/'+'xsec_x_half'+str(i))
+                    if op_fig==True:
+                        fig_dictionary.update({'fig_xsec_x_half'+str(i)+key:value})
+                    plt.close('all')
     if op_xsec_X_user  == True:
         for a in list(range(len(xsec_user_xvals))):
             for i in list(params):
                 for key,value in plotting(faces,'xsec_x_user_'+str(xsec_user_xvals[a]),
                                 'xsec_x_user_val'+str(xsec_user_xvals[a]),
                                 'Y=','Z','X','X(m)','Z(m)',i,rotate=False ).items():
-                                if op_pdf==True:
-                                    pp.savefig(value[0])
-                                if op_png==True:
-                                    value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i))
-                                if op_fig==True:
-                                    fig_dictionary.update({'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i)+key:value})
-                                plt.close('all')
+                                if value!=[None, None]:
+                                    if op_pdf==True:
+                                        pp.savefig(value[0])
+                                    if op_png==True:
+                                        value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i))
+                                    if op_fig==True:
+                                        fig_dictionary.update({'xsec_x_user_val'+str(xsec_user_xvals[a])+str(i)+key:value})
+                                    plt.close('all')
     if op_xsec_Y_user  == True:
         for a in list(range(len(xsec_user_yvals))):
             for i in list(params):
                 for key,value in plotting(faces,'xsec_y_user_'+str(xsec_user_yvals[a]),
                                     'xsec_y_user_val'+str(xsec_user_yvals[a]),
                                     'X=','Y','Z','Y(m)','Z(m)',i,rotate=True ).items():
-                                    if op_pdf==True:
-                                        pp.savefig(value[0])
-                                    if op_png==True:
-                                        value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i))
-                                    if op_fig==True:
-                                        fig_dictionary.update({'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i)+key:value})
-                                    plt.close('all')
+                                    if value!=[None, None]:
+                                        if op_pdf==True:
+                                            pp.savefig(value[0])
+                                        if op_png==True:
+                                            value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i))
+                                        if op_fig==True:
+                                            fig_dictionary.update({'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i)+key:value})
+                                        plt.close('all')
     pp.close()
     return fig_dictionary
 
