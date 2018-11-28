@@ -188,9 +188,7 @@ def aq_conc_import():
     aqconcdata_modified.columns = aqconcdata.columns[1:]
 
     aqconcdata=aqconcdata_modified.rename(index=str,columns=aqconc_name)
-    print(aqconcdata.columns.values)
 
-    print(aqconcdata.head())
     #Last time step - top, bottom, side walls
     val=int(aqconcdata.loc[aqconcdata["X"] == 'Zone'][-1:].index[0])#value of the last time zone
     lastval=int(aqconcdata.index[-1])
