@@ -2,26 +2,28 @@
 
 By Hamish Robertson & Tan Benjakul
 
-We aim to deliver a lo-fi plotting experience to Toughreactmech output files.
+We aim to deliver a LoFi plotting experience to Toughreactmech output files.
 
-## To pip install
+## To install
 
 `pip install -i https://test.pypi.org/simple/ trexplot==1`
 
-But I dont think it works well yet
+This doesn't works well yet... Will figure out some moon in the future....
+
+Just `git clone` this repo for the time being
 
 ## To get stuff to work stuff
 
-Move the TestFiles folder somewhere else
+We supply a set of example .tec files. Move the TestFiles folder somewhere else.
 
-cd into there
+`cd` into the TestFiles folder.
 
-run `python ../Trexplot/trexplot`
+run `ipython ../Trexplot/trexplot.py`
 
-or ipython or something similar
+This will use the trexoptions file which controls plotting located in this folder. The trex options supplied by default has all options turned on including for all .tec files.
 
-Have a look at the trex_fig_return.py script to get an idea how it works.
+Supported .tec files are flow data, flow vector, displacement, stress strain, aqueous concentrations, gas volfrac, mineral abundances and saturation states.
 
-I'll try and finish the pip install and this documentation more on saturday. For the moment I'm sure you can figure some bits out. I'd appreciate some rapid feedback that this all works
+Use the trex_fig_return.py script as an example of methods to personally modify the returned graphics.
 
-Also fiona wanted stuff like the ability to log variables
+Drop a message if you want new features or have bugs

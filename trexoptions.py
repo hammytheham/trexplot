@@ -18,12 +18,10 @@ op_fig					= True   #return figure files
 
 #Plot types
 colored_cells			=True
+colored_cells_log_plot  =True  #coloured cells log plot
 contour_plot			=True
 flow_vectors_no_cont	=True
 flow_vectors_cont		=True
-
-#log plot option - choose True to set the plot data to log
-colored_cells_log_plot  =True  #coloured cells log plot
 
 
 #Files
