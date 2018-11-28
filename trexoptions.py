@@ -1,7 +1,7 @@
 #trexoptions.py
 #Config (option) file for trexplotting options - Hamish Robertson
 
-#By default (op_corner=False) the corner values from the displacement output are used.
+#By default (op_corner=True) the corner values from the displacement output are used.
 #Set op_corner =True and input into arrays to override/if no displacement.tec
 #Check treactmech version to make sure displacement output is constant
 op_corner=False
@@ -9,10 +9,10 @@ op_corner_x=[1,2,3,6,8]
 op_corner_y=[2,4,10]
 op_corner_z=[1,2,3.4,3.6,3.8,4,7,8]
 
-info                    =True #Runtime progress info for user
+info                    =True #Runtime progress info for user. Warnings on negative log plots are not included
 
 #Output
-op_png					= False   #output  png files
+op_png					= True   #output  png files
 op_pdf					= True  #output pdfs
 op_fig					= True   #return figure files
 
@@ -23,7 +23,7 @@ flow_vectors_no_cont	=True
 flow_vectors_cont		=True
 
 #log plot option - choose True to set the plot data to log
-colored_cells_log_plot  =False  #coloured cells log plot
+colored_cells_log_plot  =True  #coloured cells log plot
 
 
 #Files
@@ -31,24 +31,23 @@ op_Flowdata				= True	 #readin flowdata files
 op_Flowvector			= True	 #readin flowvector files
 op_Displacement			= True	 #note the xsection half values are one 'ahead' as extra value. User no addition
 op_Stress_Strain		= True	 #readin stress_strain files
-op_aqconc               = False
-op_gas_volfrac          = False
-op_min_si               = False
-op_min_ab               = False
-
-
+op_aqconc               = True   #readin aqconc file
+op_gas_volfrac          = True  #readin gas_volfrac file
+op_min_ab               = True  #readin mineral saturation
+op_min_si               = True  #readin absolute values of minerals
+op_Plasticity           = True
 
 #Faces
 op_Top					= True   #output top surface
 op_Bot					= True  #output bottom surface
-op_Max_Y				= False  #output y-plane along the maximum value of x surface
-op_Min_Y				= False	 #output y-plane along the minimum value of x surface
-op_Max_X				= False	 #output x-plane along the maximum value of y surface
-op_Min_X				= False	 #output x-plane along the minimum value of y surface
+op_Max_Y				= True  #output y-plane along the maximum value of x surface
+op_Min_Y				= True	 #output y-plane along the minimum value of x surface
+op_Max_X				= True	 #output x-plane along the maximum value of y surface
+op_Min_X				= True	 #output x-plane along the minimum value of y surface
 op_xsec_Y_half			= True   #output x-plane along the medium value of y
-op_xsec_X_half			= False	 #output y-plane along the medium value of x
-op_xsec_Y_user			= False   #User specified x-planes from y values
-op_xsec_X_user			= False	 #User specified y-planes from x values
+op_xsec_X_half			= True	 #output y-plane along the medium value of x
+op_xsec_Y_user			= True   #User specified x-planes from y values
+op_xsec_X_user			= True	 #User specified y-planes from x values
 
 #Specify cross sections
 xsec_user_yvals =[1,2,5] #insert y vals for x-plane starting locations
@@ -58,74 +57,77 @@ xsec_user_xvals =[1,3,6] #insert x vals for y-plane starting locations
 #Flowdata Variables
 op_Porosity				= True
 op_Perm_X				= True	# add log, add min + max,
-op_Perm_Y				= False
-op_Perm_Z				= False
-op_Pressure				= False
+op_Perm_Y				= True
+op_Perm_Z				= True
+op_Pressure				= True
 op_Temperature			= True
-op_SatGas				= False
-op_SatLiq				= False
-op_X1					= False
-op_X2					= False
-op_Pcap					= False
-op_DGas					= False
-op_DLiq					= False
-op_Krel_Gas				= False
-op_Krel_Liq				= False
-op_HGas					= False
-op_HLiq					= False
-op_Cp					= False
-op_TC					= False
-op_DBlk					= False
-op_Tdif					= False
+op_SatGas				= True
+op_SatLiq				= True
+op_X1					= True
+op_X2					= True
+op_Pcap					= True
+op_DGas					= True
+op_DLiq					= True
+op_Krel_Gas				= True
+op_Krel_Liq				= True
+op_HGas					= True
+op_HLiq					= True
+op_Cp					= True
+op_TC					= True
+op_DBlk					= True
+op_Tdif					= True
 
 #Flowvector Variables
 op_FluxLiq				= True
-op_FluxLiq_X			= False
-op_FluxLiq_Y			= False
+op_FluxLiq_X			= True
+op_FluxLiq_Y			= True
 op_FluxLiq_Z			= True
-op_PorVelLiq			= False
-op_PorVelLiqX			= False
-op_PorVelLiqY			= False
-op_PorVelLiqZ			= False
-op_FluxGas				= False
-op_FluxGas_X			= False
-op_FluxGas_Y			= False
-op_FluxGas_Z			= False
-op_PorVelGas			= False
+op_PorVelLiq			= True
+op_PorVelLiqX			= True
+op_PorVelLiqY			= True
+op_PorVelLiqZ			= True
+op_FluxGas				= True
+op_FluxGas_X			= True
+op_FluxGas_Y			= True
+op_FluxGas_Z			= True
+op_PorVelGas			= True
 op_PorVelGasX			= True
-op_PorVelGasY			= False
-op_PorVelGasZ			= False
-op_HeatFlux				= False
-op_HeatFlux_X			= False
-op_HeatFlux_Y			= False
-op_HeatFlux_Z			= False
+op_PorVelGasY			= True
+op_PorVelGasZ			= True
+op_HeatFlux				= True
+op_HeatFlux_X			= True
+op_HeatFlux_Y			= True
+op_HeatFlux_Z			= True
 
 #Displacement variables
 op_Disp_x				= True
 op_Disp_y				= True
-op_Disp_z				= False
+op_Disp_z				= True
 
 #Stress Strain variables
 op_Sigma_xx				= True
 op_Sigma_yy				= True
 op_Sigma_zz				= True
-op_Sigma_yz				= False
-op_Sigma_xz				= False
-op_Sigma_xy				= False
+op_Sigma_yz				= True
+op_Sigma_xz				= True
+op_Sigma_xy				= True
 op_Strain_xx			= True
-op_Strain_yy			= False
-op_Strain_zz			= False
-op_Strain_yz			= False
-op_Strain_xz			= False
-op_Strain_xy			= False
-op_Vol_Strain			= False
-op_E_fail_xx			= False
-op_E_fail_yy			= False
+op_Strain_yy			= True
+op_Strain_zz			= True
+op_Strain_yz			= True
+op_Strain_xz			= True
+op_Strain_xy			= True
+op_Vol_Strain			= True
+op_E_fail_xx			= True
+op_E_fail_yy			= True
 op_E_fail_zz			= True
-op_E_fail_yz2			= False
-op_E_fail_xz2			= False
-op_E_fail_xy2			= False
-op_E_fail_vol			= False
+op_E_fail_yz2			= True
+op_E_fail_xz2			= True
+op_E_fail_xy2			= True
+op_E_fail_vol			= True
+
+#Plasticity variables - I started writing a plasticity import file
+#pretty sure its all in stress strain file
 
 #Aqueous Species for aqconc.tec
 #Check and add to the dictionary bellow to input all of your solution species
@@ -134,12 +136,13 @@ op_E_fail_vol			= False
 #The dictionary bellow the names is where you turn them on or off just expand as needed
 #This section is a little different to the above as when you add in new minerals or output
 #You need to modify this. The other files you dont tend to get variations in output
-
-aqconc_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"P(Pa)"':"Pressure(Pa)", '"T(C)"':"Temperature(C)",
+#Order matters
+aqconc_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"P(bar)"':"Pressure(bar)", '"T(C)"':"Temperature(C)",
             '"SatGas"':"SatGas",'"SatLiq"':"SatLiq",'"aH2O"':"aH2O",'"pH"':"pH",'"t_na+"':"t_na+",'"t_cl-"':"t_cl-",
             '"t_hco3-"':"t_hco3-",'"t_ca+2"':"t_ca+2",'"t_so4-2"':"t_so4-2",'"t_mg+2"':"t_mg+2",'"t_ba+2"':"t_ba+2",
             '"t_al+3"':"t_al+3",'"t_h4sio4"':"t_h4sio4",'"t_k+"':"t_k+"}
 
+#Order doesn't matter
 aqconc_variable={'Pressure(Pa)':True,
             'Temperature(C)':True,
             'SatGas':True,
@@ -157,35 +160,42 @@ aqconc_variable={'Pressure(Pa)':True,
             't_h4sio4':True,
             't_k+':True}
 
-# Import params and variable print settings for gas_volfrac.tec
-gas_volfrac_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"P(bar)"':"Pressure(bar)", '"T(C)"':"Temperature(C)",
-                 '"SatGas"':"SatGas",'"RH"':"RH"}
-gas_volfrac_names=["X", "Y", "Z", "Pressure(bar)", "Temperature(C)",
-                 "SatGas","RH"]
+# Import params and variable print settings for gas_volfrac.tec.Func inserts values in before as too small a dataset for normal use.
+# Note the setting that the dict key is "'X'" format rather than '"X"' in others. The script writes a header of the dict keys to the top of the
+# .tec file which is then re-read back in. Why? See futher discussion in the function gas_volfrac_import. If you need extra then just remove the blanks.
+# Order matters
+gas_volfrac_name={"'X'":'X', "'Y'":'Y', "'Z'":'Z', "'Pressure(bar)'":'Pressure(bar)', "'Temperature(C)'":'Temperature(C)',
+                 "'SatGas'":'SatGas',"'RH'":'RH',"'blank1'":'blank1',"'blank2'":'blank2',"'blank3'":'blank3',"'blank4'":'blank4'}
 
-gas_volfrac_variable={'Pressure(Pa)':True,
+#Order doesnt matter
+gas_volfrac_variable={'Pressure(bar)':True,
             'Temperature(C)':True,
             'SatGas':True,
             'RH':True}
 
-#Import params and variable print settings for min_SI.tec
-min_si_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"T(C)"':"Temperature(C)",
-                 '"dolomite"':"dolomite",'"calcite"':"calcite"}
-
-min_si_variable={'Temperature(C)':True,
-            'dolomite':True,
-            'calcite':True}
-
-#Import params and variable print settings for mineral.tec
+#Import params and variable print settings for mineral.tec.
+# Order matters
 min_ab_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"Porosity"':"Porosity",
             '"Poros_Chg"':"Poros_Chg",'"Permx(m^2)"':"Permx(m^2)",'"Kx/Kx0"':"Kx/Kx0", '"Permz(m^2)"':"Permz(m^2)",
             '"Kz/Kz0"':"Kz/Kz0",'"dolomite"':"dolomite",'"calcite"':"calcite"}
 
+#Order doesnt matter
 min_ab_variable={'Porosity':True,
             'Poros_Chg':True,
             'Permx(m^2)':True,
             'Kx/Kx0':True,
             'Permz(m^2)':True,
             'Kz/Kz0':True,
+            'dolomite':True,
+            'calcite':True}
+
+
+#Import params and variable print settings for min_SI.tec
+# Order matters
+min_si_name={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"T(C)"':"Temperature(C)",
+                 '"dolomite"':"dolomite",'"calcite"':"calcite"}
+
+#Order doesnt matter
+min_si_variable={'Temperature(C)':True,
             'dolomite':True,
             'calcite':True}

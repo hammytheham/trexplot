@@ -8,7 +8,7 @@ def main():
 #    fig,ax=plots['fig_TopPerm_X(m2)pcolor']
 #    fig,ax=plots['fig_TopTemperature(C)pcolor']
     fig,ax=plots['fig_xsec_y_halfTemperature(C)pcolor']
-
+#
     ax.set_title('Power of da python')
     ax.set_xlabel('Total Sauce')
 #    ax.set_xlim(300,500)

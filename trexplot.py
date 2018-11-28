@@ -33,11 +33,11 @@ def flowdata_import():
     flowdata_modified.columns = flowdata.columns[1:]
 
     flowdata=flowdata_modified.rename(index=str,columns={'"X(m)"':"X", '"Y(m)"':"Y", '"Z(m)"':"Z", '"P(Pa)"':"Pressure(Pa)", '"T(C)"':"Temperature(C)",
-    '"SatGas"':"SatGas",'"SatLiq"':"SatLiq",'"X1"':"X1", '"X2"':"X2", '"Pcap(Pa)"':"Pcap", '"DGas_kg/m3"':"DGas_kg/m3",
-    '"DLiq_kg/m3"':"DLiq_kg/m3", '"Porosity"':"Porosity", '"Perm_X(m2)"':"Perm_X(m2)", '"Perm_Y(m2)"':"Perm_Y(m2)",
-    '"Perm_Z(m2)"':"Perm_Z(m2)", '"Krel_Gas"':"Krel_Gas", '"Krel_Liq"':"Krel_Liq", '"HGas(J/kg)"':"HGas(J/kg)",
-    '"HLiq(J/kg)"':"HLiq(J/kg)", '"Cp(J/kg/C)"':"Cp(J/kg/C)", '"TC(W/m/C)"':"TC(W/m/C)", '"DBlk_kg/m3"':"DBlk_kg/m3",
-    '"Tdif(m2/s)"':"Tdif(m2/s)"})
+    '"SatGas"':"SatGas",'"SatLiq"':"SatLiq",'"X1"':"X1", '"X2"':"X2", '"Pcap(Pa)"':"Pcap", '"DGas_kg/m3"':"DGas_kg_m3",
+    '"DLiq_kg/m3"':"DLiq_kg_m3", '"Porosity"':"Porosity", '"Perm_X(m2)"':"Perm_X(m2)", '"Perm_Y(m2)"':"Perm_Y(m2)",
+    '"Perm_Z(m2)"':"Perm_Z(m2)", '"Krel_Gas"':"Krel_Gas", '"Krel_Liq"':"Krel_Liq", '"HGas(J/kg)"':"HGas(J_kg)",
+    '"HLiq(J/kg)"':"HLiq(J_kg)", '"Cp(J/kg/C)"':"Cp(J_kg_C)", '"TC(W/m/C)"':"TC(W_m_C)", '"DBlk_kg/m3"':"DBlk_kg_m3",
+    '"Tdif(m2/s)"':"Tdif(m2_s)"})
 
 
     #Last time step - top, bottom, side walls
@@ -188,7 +188,9 @@ def aq_conc_import():
     aqconcdata_modified.columns = aqconcdata.columns[1:]
 
     aqconcdata=aqconcdata_modified.rename(index=str,columns=aqconc_name)
+    print(aqconcdata.columns.values)
 
+    print(aqconcdata.head())
     #Last time step - top, bottom, side walls
     val=int(aqconcdata.loc[aqconcdata["X"] == 'Zone'][-1:].index[0])#value of the last time zone
     lastval=int(aqconcdata.index[-1])
@@ -227,13 +229,27 @@ def aq_conc_import():
 
 def gas_volfrac_import():
     """
-    Imports the gas_volfrac file, - problems with this
+    Imports the gas_volfrac file
+
+    Why? See https://stackoverflow.com/questions/18039057/python-pandas-error-tokenizing-data
+     I need the 'bad lines' - specifically the time-step lines which are 11 values long and wanted to re-use other code that reads in those
+     lines for simplicity sake. Theres probably a much cleaner pandas import rule that could have been applied to all file Imports
+     that could be worked up fairly quickly... All the importing functions Im sure could be better/cleaner but y'know....
+
+     BE CAREFUL and make sure you wipe the written-in header in the .tec file if you go chaning stuff in here. The function will write a new header if the
+     gas_volfrac_name dictionary changes at all. Also because I'm writing inplace for simplicity I make a backup .tec file by default for caution
     """
 
-    gas_volfracdata=pd.read_csv(cwd+'/gas_volfrac.tec',sep=r"\s*",skiprows=[0],usecols=[0,1,2,3],engine='python')
-    gas_volfracdata.loc[0]
-    gas_volfracdata=gas_volfracdata.rename(index=str,columns=gas_volfrac_names)
-    print(gas_volfracdata)
+    with open(cwd+'/gas_volfrac.tec', 'r') as original: data = original.read()
+    header=str([i for i in gas_volfrac_name.values()]).strip('[]').replace(',','')
+    print (header)
+    print (data[0:len(header)])
+    if data[0:len(header)]!=header:
+        with open(cwd+'/gas_volfrac.tec', 'w') as modified: modified.write(header + "\n" + data)
+
+    gas_volfracdata=pd.read_csv(cwd+'/gas_volfrac.tec',sep=r"\s*",skiprows=[2],engine='python')
+    gas_volfracdata=gas_volfracdata.rename(columns=gas_volfrac_name) #fit the column name values with the dictionary
+
     #Last time step - top, bottom, side walls
     val=int(gas_volfracdata.loc[gas_volfracdata["X"] == 'Zone'][-1:].index[0])#value of the last time zone
     lastval=int(gas_volfracdata.index[-1])
@@ -278,7 +294,7 @@ def mineral_ab_import():
     mineral_ab_data_modified= mineral_ab_data[mineral_ab_data.columns[:-1]]
     mineral_ab_data_modified.columns = mineral_ab_data.columns[1:]
 
-    mineral_ab_data=mineral_ab_data_modified.rename(index=str,columns=min_name)
+    mineral_ab_data=mineral_ab_data_modified.rename(index=str,columns=min_ab_name)
 
     #Last time step - top, bottom, side walls
     val=int(mineral_ab_data.loc[mineral_ab_data["X"] == 'Zone'][-1:].index[0])#value of the last time zone
@@ -324,7 +340,7 @@ def mineral_si_import():
     mineral_si_data_modified= mineral_si_data[mineral_si_data.columns[:-1]]
     mineral_si_data_modified.columns = mineral_si_data.columns[1:]
 
-    mineral_si_data=mineral_si_data_modified.rename(index=str,columns=min_name)
+    mineral_si_data=mineral_si_data_modified.rename(index=str,columns=min_si_name)
 
     #Last time step - top, bottom, side walls
     val=int(mineral_si_data.loc[mineral_si_data["X"] == 'Zone'][-1:].index[0])#value of the last time zone
@@ -361,47 +377,6 @@ def mineral_si_import():
             mineral_si_faces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
     return mineral_si_faces
-
-def corner_val_import():
-    """
-    By default in trexoptions.py op_corner=False the corner values from the displacement output are used.
-    If you set op_corner =True and input into arrays you can override/if no displacement.tec has been output.
-    The reason is that flowvector, data etc all output the value of the centre of the cell. Plotting
-    functions require us to know the indices.
-
-    These values arent used in the facechoose function (see plotting running order) unless its actually for
-    displacement values (which are recorded as the corner indices).
-
-    The function returns a shaped 3D mesh 'vals' with each value in the mesh the actual co-ordinate location.
-
-    """
-
-    if op_corner == False:
-        column_names=["X","Y","Z"]
-        displace=pd.read_csv(cwd+'/displacement.tec',sep=r"\s+",skiprows=[0,1],usecols=[0,1,2],
-                             names=column_names,engine='python')
-
-        val=int(displace.loc[displace["X"] == 'Zone'][-1:].index[0])
-        lastval=int(displace.index[-1])
-        length=lastval - val
-        zone=displace[val+1:lastval+1]
-
-        zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
-        zone['xyz'] = list(zip(zone.X,zone.Y,zone.Z))
-        vals=zone.xyz.values.reshape(len(zone.Z.unique()),len(zone.Y.unique()),len(zone.X.unique()))
-    if op_corner == True:
-        corner_x=op_corner_x
-        corner_y=op_corner_y
-        corner_z=op_corner_z
-        a=[]
-        for z in corner_z:
-            for y in corner_y:
-                for x in corner_x:
-                    a.append(tuple([x,y,z]))
-        df1 = pd.DataFrame(data=pd.Series(a))
-        vals=df1.values.reshape(len(corner_z),len(corner_y),len(corner_x))
-
-    return vals
 
 def stress_strain_import():
     """
@@ -449,6 +424,48 @@ def stress_strain_import():
             stressfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
     return stressfaces
+
+
+def corner_val_import():
+    """
+    By default in trexoptions.py op_corner=False the corner values from the displacement output are used.
+    If you set op_corner =True and input into arrays you can override/if no displacement.tec has been output.
+    The reason is that flowvector, data etc all output the value of the centre of the cell. Plotting
+    functions require us to know the indices.
+
+    These values arent used in the facechoose function (see plotting running order) unless its actually for
+    displacement values (which are recorded as the corner indices).
+
+    The function returns a shaped 3D mesh 'vals' with each value in the mesh the actual co-ordinate location.
+
+    """
+
+    if op_corner == False:
+        column_names=["X","Y","Z"]
+        displace=pd.read_csv(cwd+'/displacement.tec',sep=r"\s+",skiprows=[0,1],usecols=[0,1,2],
+                             names=column_names,engine='python')
+
+        val=int(displace.loc[displace["X"] == 'Zone'][-1:].index[0])
+        lastval=int(displace.index[-1])
+        length=lastval - val
+        zone=displace[val+1:lastval+1]
+
+        zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore', downcast='float')
+        zone['xyz'] = list(zip(zone.X,zone.Y,zone.Z))
+        vals=zone.xyz.values.reshape(len(zone.Z.unique()),len(zone.Y.unique()),len(zone.X.unique()))
+    if op_corner == True:
+        corner_x=op_corner_x
+        corner_y=op_corner_y
+        corner_z=op_corner_z
+        a=[]
+        for z in corner_z:
+            for y in corner_y:
+                for x in corner_x:
+                    a.append(tuple([x,y,z]))
+        df1 = pd.DataFrame(data=pd.Series(a))
+        vals=df1.values.reshape(len(corner_z),len(corner_y),len(corner_x))
+
+    return vals
 
 def face_choose(axis1,axis2,param):
   """
@@ -602,16 +619,16 @@ if op_SatLiq				== True:flowdata_params.append('SatLiq')
 if op_X1					== True:flowdata_params.append('X1')
 if op_X2					== True:flowdata_params.append('X2')
 if op_Pcap					== True:flowdata_params.append('Pcap')
-if op_DGas					== True:flowdata_params.append('DGas_kg/m3')
-if op_DLiq					== True:flowdata_params.append('DLiq_kg/m3')
+if op_DGas					== True:flowdata_params.append('DGas_kg_m3')
+if op_DLiq					== True:flowdata_params.append('DLiq_kg_m3')
 if op_Krel_Gas				== True:flowdata_params.append('Krel_Gas')
 if op_Krel_Liq				== True:flowdata_params.append('Krel_Liq')
-if op_HGas					== True:flowdata_params.append('HGas(J/kg)')
-if op_HLiq					== True:flowdata_params.append('HLiq(J/kg)')
-if op_Cp					== True:flowdata_params.append('Cp(J/kg/C)')
-if op_TC					== True:flowdata_params.append('TC(W/m/C)')
-if op_DBlk					== True:flowdata_params.append('DBlk_kg/m3')
-if op_Tdif					== True:flowdata_params.append('Tdif(m2/s)')
+if op_HGas					== True:flowdata_params.append('HGas(J_kg)')
+if op_HLiq					== True:flowdata_params.append('HLiq(J_kg)')
+if op_Cp					== True:flowdata_params.append('Cp(J_kg_C)')
+if op_TC					== True:flowdata_params.append('TC(W_m_C)')
+if op_DBlk					== True:flowdata_params.append('DBlk_kg_m3')
+if op_Tdif					== True:flowdata_params.append('Tdif(m2_s)')
 
 if op_FluxLiq				== True:flowvector_params.append('FluxLiq')
 if op_FluxLiq_X			    == True:flowvector_params.append('FluxLiq_X')
@@ -671,17 +688,19 @@ def gas_volfrac_params_selector():
             gas_volfrac_params.append(key)
     return gas_volfrac_params
 
-def min_si_params_selector():
+def mineral_ab_params_selector():
+    for key,value in min_ab_variable.items():
+        if value==True:
+            min_ab_params.append(key)
+    return min_ab_params
+
+def mineral_si_params_selector():
     for key,value in min_si_variable.items():
         if value==True:
             min_si_params.append(key)
     return min_si_params
 
-def min_ab_params_selector():
-    for key,value in min_ab_variable.items():
-        if value==True:
-            min_ab_params.append(key)
-    return min_ab_params
+
 
 def corner_point_vals():
     """
@@ -899,9 +918,7 @@ def fig_return(faces,params):
     fig_dictionary={}
     if op_Top == True:
         for i in list(params):
-            print(plotting(faces      ,'Top'        ,'tpval'          ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False))
             for key,value in plotting(faces      ,'Top'        ,'tpval'          ,'Z=','Y','X','X(m)','Y(m)',i,rotate=False).items():
-                print(key,value)
                 fig_dictionary.update({'fig_Top'+str(i)+key:value})
     if op_Bot == True:
         for i in list(params):
@@ -1000,6 +1017,8 @@ def main():
         if op_fig==True:
             stress_strain_fig=fig_return(stressfaces,stress_strain_params)
     if op_aqconc==True:
+        if info==True:
+            print('Running aqconc.tec')
         aqconcfaces=aq_conc_import()
         aqconc_params=aqconc_params_selector()
         if op_png==True:
@@ -1009,6 +1028,8 @@ def main():
         if op_fig==True:
             aqconcfig=fig_return(aqconcfaces,aqconc_params)
     if op_gas_volfrac==True:
+        if info==True:
+            print('Running gas_volfrac.tec')
         gas_volfrac_faces=gas_volfrac_import()
         gas_volfrac_params=gas_volfrac_params_selector()
         if op_png==True:
@@ -1017,27 +1038,94 @@ def main():
             pdfplotting(gas_volfrac_faces,gas_volfrac_params,cwd+"/gas_volfrac.pdf")
         if op_fig==True:
             gas_volfrac_fig=fig_return(gas_volfrac_faces,gas_volfrac_params)
-    if op_min_si==True:
-        min_si_faces=min_si_import()
-        min_si_params=min_si_params_selector()
-        if op_png==True:
-            pngplotting(min_si_faces,min_si_params)
-        if op_pdf==True:
-            pdfplotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
-        if op_fig==True:
-            min_si_fig=fig_return(min_si_faces,min_si_params)
     if op_min_ab==True:
-        min_ab_faces=min_ab_import()
-        min_ab_params=min_ab_params_selector()
+        if info==True:
+            print('Running min_ab.tec')
+        min_ab_faces=mineral_ab_import()
+        min_ab_params=mineral_ab_params_selector()
         if op_png==True:
             pngplotting(min_ab_faces,min_ab_params)
         if op_pdf==True:
             pdfplotting(min_ab_faces,min_ab_params,cwd+"/min_ab.pdf")
         if op_fig==True:
             min_ab_fig=fig_return(min_ab_faces,min_ab_params)
+    if op_min_si==True:
+        if info==True:
+            print('Running min_si.tec')
+        min_si_faces=mineral_si_import()
+        min_si_params=mineral_si_params_selector()
+        if op_png==True:
+            pngplotting(min_si_faces,min_si_params)
+        if op_pdf==True:
+            pdfplotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
+        if op_fig==True:
+            min_si_fig=fig_return(min_si_faces,min_si_params)
+
 
     return flowfig, flowvecfig, dispfig, stress_strain_fig, aqconcfig, gas_volfrac_fig, min_si_fig, min_ab_fig
 
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+#Possible future code if plasticity has anything in
+
+#def plasticity_params_selector():
+    #Started this - probably defunct
+#    for key,value in min_si_variable.items():
+#        if value==True:
+#            min_si_params.append(key)
+#    return min_si_params
+
+#def plasticity_import():
+    """
+    Imports the plasticity file from current working directory. Column names are largely preserved. Takes in only the last time step values.
+    Returns a dictionary 'plasticity faces' that contains the stress_strain data for each of the default and user specificed faces.
+    DEFUNCT ATM
+    """
+#
+#    column_names=["X(m)", "Y(m)", "Z(m)", "ielem", "N_shear", "N_tensl",     "N_Surf",   "E_fail_xx",   "E_fail_yy" , "E_fail_zz*2 " , "E_fail_yz*2", "E_fail_xz*2" , "E_fail_xy*2", "E_fail_vol"]
+#    plasticity=pd.read_csv(cwd+'/Plasticity.tec',sep=r"\s+",skiprows=[1],names=column_names,engine='python')
+#
+#    val=int(plasticity.loc[plasticity["X"] == 'Zone'][-1:].index[0])
+#    lastval=int(plasticity.index[-1])
+#    length=lastval - val
+#    zone=plasticity[val+1:lastval+1]
+#
+#    zone[zone.columns] = zone[zone.columns].apply(pd.to_numeric, errors='ignore',
+#                                                                          downcast='float')
+#
+#    top,tpval  = zone.loc[zone["Z"] == max(zone.Z) ],max(zone.Z)
+#    bot,btval  = zone.loc[zone["Z"] == min(zone.Z) ],min(zone.Z)
+#    MaxY,MxYval= zone.loc[zone["Y"] == max(zone.Y) ],max(zone.Y)
+#    MinY,MnYval= zone.loc[zone["Y"] == min(zone.Y) ],min(zone.Y)
+#    MaxX,MxXval= zone.loc[zone["X"] == max(zone.X) ],max(zone.X)
+#    MinX,MnXval= zone.loc[zone["X"] == min(zone.X) ],min(zone.X)
+#
+#    xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
+#    xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+#
+#
+#    plasticityfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,
+#                 'Max-X':MaxX,'Min-X':MinX,'tpval' : tpval, 'btval' : btval,
+#                 'MxYval' : MxYval, 'MnYval' : MnYval, 'MxXval' : MxXval, 'MnXval' : MnXval,'xsec_x_half':xsec_x,'xsec_x_half_val':xsec_x_val,
+#              'xsec_y_half':xsec_y,'xsec_y_val_half':xsec_y_val}
+#
+#    if op_xsec_X_user == True:
+#        for i in list(range(len(xsec_user_xvals))):
+#            xsec_x_user,xsec_x_user_val=zone.loc[zone["Y"] == zone.Y.unique()[xsec_user_xvals[i]]],zone.Y.unique()[xsec_user_xvals[i]]
+#            plasticityfaces.update({'xsec_x_user_'+str(xsec_user_xvals[i]):xsec_x_user,'xsec_x_user_val'+str(xsec_user_xvals[i]):xsec_x_user_val})
+#
+#    if op_xsec_Y_user == True:
+#        for i in list(range(len(xsec_user_yvals))):
+#            xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
+#            plasticityfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+#
+#    return plasticityfaces
