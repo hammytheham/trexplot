@@ -938,48 +938,48 @@ def main():
         if info==True:
             print('Running flowdata.tec')
         flowfaces=flowdata_import()
-        pdf_png_fig_plotting(flowfaces,flowdata_params,cwd+"/flow_data.pdf")
+        flowfig=pdf_png_fig_plotting(flowfaces,flowdata_params,cwd+"/flow_data.pdf")
     if op_Flowvector==True:
         if info==True:
             print('Running flowvector.tec')
         flowvecfaces=flowvector_import()
-        pdf_png_fig_plotting(flowvecfaces,flowvector_params,cwd+"/flow_vector.pdf")
+        flowvecfig=pdf_png_fig_plotting(flowvecfaces,flowvector_params,cwd+"/flow_vector.pdf")
     if op_Displacement==True:
         if info==True:
             print('Running displacement.tec')
         dispfaces=displace_import()
-        pdf_png_fig_plotting(dispfaces,displacement_params,cwd+"/displacement.pdf")
+        dispfig=pdf_png_fig_plotting(dispfaces,displacement_params,cwd+"/displacement.pdf")
     if op_Stress_Strain==True:
         if info==True:
             print('Running stress_strain.tec')
         stressfaces=stress_strain_import()
-        pdf_png_fig_plotting(stressfaces,stress_strain_params,cwd+"/stress_strain.pdf")
+        stress_strain_fig=pdf_png_fig_plotting(stressfaces,stress_strain_params,cwd+"/stress_strain.pdf")
     if op_aqconc==True:
         if info==True:
             print('Running aqconc.tec')
         aqconcfaces=aq_conc_import()
         aqconc_params=aqconc_params_selector()
-        pdf_png_fig_plotting(aqconcfaces,aqconc_params,cwd+"/aq_conc.pdf")
+        aqconcfig=pdf_png_fig_plotting(aqconcfaces,aqconc_params,cwd+"/aq_conc.pdf")
     if op_gas_volfrac==True:
         if info==True:
             print('Running gas_volfrac.tec')
         gas_volfrac_faces=gas_volfrac_import()
         gas_volfrac_params=gas_volfrac_params_selector()
-        pdf_png_fig_plotting(gas_volfrac_faces,gas_volfrac_params,cwd+"/gas_volfrac.pdf")
+        gas_volfrac_fig=pdf_png_fig_plotting(gas_volfrac_faces,gas_volfrac_params,cwd+"/gas_volfrac.pdf")
     if op_min_ab==True:
         if info==True:
             print('Running min_ab.tec')
         min_ab_faces=mineral_ab_import()
         min_ab_params=mineral_ab_params_selector()
-        pdf_png_fig_plotting(min_ab_faces,min_ab_params,cwd+"/min_ab.pdf")
+        min_ab_fig=pdf_png_fig_plotting(min_ab_faces,min_ab_params,cwd+"/min_ab.pdf")
     if op_min_si==True:
         if info==True:
             print('Running min_si.tec')
         min_si_faces=mineral_si_import()
         min_si_params=mineral_si_params_selector()
-        pdf_png_fig_plotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
+        min_si_fig=pdf_png_fig_plotting(min_si_faces,min_si_params,cwd+"/min_si.pdf")
 
-    return flowfig, flowvecfig, dispfig, stress_strain_fig, aqconcfig, gas_volfrac_fig, min_si_fig, min_ab_fig
+    return flowfig, flowvecfig, dispfig, stress_strain_fig, aqconcfig, gas_volfrac_fig, min_ab_fig, min_si_fig
 
 
 if __name__ == "__main__":

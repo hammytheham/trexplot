@@ -14,25 +14,25 @@ info                    =True #Runtime progress info for user. Warnings on negat
 #Output
 op_png					= False   #output  png files
 op_pdf					= True  #output pdfs
-op_fig					= False   #return figure files
+op_fig					= True   #return figure files
 
 #Plot types
 colored_cells			=True
 colored_cells_log_plot  =False  #log the coloured cells plot
 contour_plot			=False
-flow_vectors_no_cont	=True
-flow_vectors_cont		=True
+flow_vectors_no_cont	=False
+flow_vectors_cont		=False
 
 
 #Files
-op_Flowdata				= True	 #readin flowdata files
+op_Flowdata				= False	 #readin flowdata files
 op_Flowvector			= False	 #readin flowvector files
 op_Displacement			= False	 #note the xsection half values are one 'ahead' as extra value. User no addition
 op_Stress_Strain		= False	 #readin stress_strain files
 op_aqconc               = False   #readin aqconc file
 op_gas_volfrac          = False  #readin gas_volfrac file
 op_min_ab               = True  #readin mineral saturation
-op_min_si               = True  #readin absolute values of minerals
+op_min_si               = False  #readin absolute values of minerals
 # op_Plasticity           = True # not currently used
 
 #Faces
