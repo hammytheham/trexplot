@@ -25,7 +25,7 @@ flow_vectors_cont		=False
 
 
 #Files
-op_Flowdata				= False	 #readin flowdata files
+op_Flowdata				= True	 #readin flowdata files
 op_Flowvector			= False	 #readin flowvector files
 op_Displacement			= False	 #note the xsection half values are one 'ahead' as extra value. User no addition
 op_Stress_Strain		= False	 #readin stress_strain files
@@ -36,7 +36,7 @@ op_min_si               = False  #readin absolute values of minerals
 # op_Plasticity           = True # not currently used
 
 #Faces
-op_Top					= False   #output top surface
+op_Top					= True   #output top surface
 op_Bot					= False  #output bottom surface
 op_Max_Y				= False  #output y-plane along the maximum value of x surface
 op_Min_Y				= False	 #output y-plane along the minimum value of x surface
