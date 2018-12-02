@@ -74,6 +74,11 @@ def flowdata_import():
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             flowfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            flowfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
     return flowfaces
 
 def flowvector_import():
@@ -127,6 +132,10 @@ def flowvector_import():
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             vecfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            vecfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
 
 
 
@@ -177,6 +186,11 @@ def displace_import():
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]+1]
             dispfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            dispfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
     return dispfaces
 
 def aq_conc_import():
@@ -222,6 +236,11 @@ def aq_conc_import():
         for i in list(range(len(xsec_user_yvals))):
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             aqconcfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            aqconcfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
 
     return aqconcfaces
 
@@ -282,6 +301,12 @@ def gas_volfrac_import():
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             gas_volfracfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            gas_volfracfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
+
     return gas_volfracfaces
 
 def mineral_ab_import():
@@ -327,6 +352,12 @@ def mineral_ab_import():
         for i in list(range(len(xsec_user_yvals))):
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             mineral_ab_faces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            mineral_ab_faces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
 
     return mineral_ab_faces
 
@@ -374,6 +405,12 @@ def mineral_si_import():
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             mineral_si_faces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            mineral_si_faces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
+
     return mineral_si_faces
 
 def stress_strain_import():
@@ -420,6 +457,12 @@ def stress_strain_import():
         for i in list(range(len(xsec_user_yvals))):
             xsec_y_user,xsec_y_user_val=zone.loc[zone["X"] == zone.X.unique()[xsec_user_yvals[i]]],zone.X.unique()[xsec_user_yvals[i]]
             stressfaces.update({'xsec_y_user_'+str(xsec_user_yvals[i]):xsec_y_user,'xsec_y_user_val'+str(xsec_user_yvals[i]):xsec_y_user_val})
+
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            xsec_z_user,xsec_z_user_val=zone.loc[zone["Z"] == zone.Z.unique()[xsec_user_zvals[i]]],zone.Z.unique()[xsec_user_zvals[i]]
+            stressfaces.update({'xsec_z_user_'+str(xsec_user_zvals[i]):xsec_z_user,'xsec_z_user_val'+str(xsec_user_zvals[i]):xsec_z_user_val})
+
 
     return stressfaces
 

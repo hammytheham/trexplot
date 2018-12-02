@@ -46,11 +46,12 @@ op_xsec_Y_half			= True   #output x-plane along the medium value of y
 op_xsec_X_half			= True	 #output y-plane along the medium value of x
 op_xsec_Y_user			= True   #User specified x-planes from y values
 op_xsec_X_user			= True	 #User specified y-planes from x values
+op_xsec_Z_user			= True	 #User specified z-planes from z values
 
 #Specify cross sections
 xsec_user_yvals =[1,2,5] #insert y vals for x-plane starting locations
 xsec_user_xvals =[1,3,6] #insert x vals for y-plane starting locations
-
+xsec_user_zvals =[1,5]   #plan view crosssections
 
 #Flowdata Variables
 op_Porosity				= True
