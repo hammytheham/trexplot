@@ -4,6 +4,11 @@ By Hamish Robertson & Tan Benjakul
 
 We aim to deliver a LoFi plotting experience to Toughreactmech output files.
 
+Only plots the last time step at the moment.
+4/5 different types of plot
+Should work with any grids you have.
+You dont need a displacement file (see trexoptions) but the default is you have one in the directory. It is used for the corner locations.
+
 ## To install
 
 `pip install -i https://test.pypi.org/simple/ trexplot==1`
