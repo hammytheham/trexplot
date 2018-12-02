@@ -57,6 +57,7 @@ def flowdata_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     flowfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -114,6 +115,7 @@ def flowvector_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     vecfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -170,6 +172,7 @@ def displace_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)+1]],zone.Y.unique()[int(len(zone.Y.unique())/2)+1]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)+1]],zone.X.unique()[int(len(zone.X.unique())/2)+1]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)+1]],zone.Z.unique()[int(len(zone.Z.unique())/2)+1]
 
     dispfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
            'tpval' : tpval, 'btval' : btval, 'MxYval' : MxYval, 'MnYval' : MnYval,
@@ -220,6 +223,7 @@ def aq_conc_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     aqconcfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -284,6 +288,7 @@ def gas_volfrac_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     gas_volfracfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -336,6 +341,7 @@ def mineral_ab_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     mineral_ab_faces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -388,6 +394,7 @@ def mineral_si_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     mineral_si_faces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,'Max-X':MaxX,'Min-X':MinX,
@@ -441,6 +448,7 @@ def stress_strain_import():
 
     xsec_x,xsec_x_val=zone.loc[zone["Y"] == zone.Y.unique()[int(len(zone.Y.unique())/2)]],zone.Y.unique()[int(len(zone.Y.unique())/2)]
     xsec_y,xsec_y_val=zone.loc[zone["X"] == zone.X.unique()[int(len(zone.X.unique())/2)]],zone.X.unique()[int(len(zone.X.unique())/2)]
+    xsec_z,xsec_z_val=zone.loc[zone["Z"] == zone.Z.unique()[int(len(zone.Z.unique())/2)]],zone.Z.unique()[int(len(zone.Z.unique())/2)]
 
 
     stressfaces={'Top':top,'Bot':bot,'Max-Y':MaxY,'Min-Y':MinY,
@@ -794,6 +802,10 @@ def corner_point_vals():
             cpvs.update({'xsec_x_user_'+str(xsec_user_xvals[i])+'_Z':[x[2] for x in a[:,[xsec_user_xvals[i]],[0]].flatten()],
                          'xsec_x_user_'+str(xsec_user_xvals[i])+'_X':[x[0] for x in a[[0],[xsec_user_xvals[i]],:].flatten()]})
 
+    if op_xsec_Z_user == True:
+        for i in list(range(len(xsec_user_zvals))):
+            cpvs.update({'xsec_z_user_'+str(xsec_user_zvals[i])+'_Y':[x[1] for x in a[[xsec_user_zvals[i]],:,[0]].flatten()],
+                         'xsec_z_user_'+str(xsec_user_zvals[i])+'_X':[x[0] for x in a[[xsec_user_zvals[i]],[0],:].flatten()]})
 
     return cpvs
 
@@ -961,6 +973,20 @@ def pdf_png_fig_plotting(faces,params,file_name):
                                             value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i))
                                         if op_fig==True:
                                             fig_dictionary.update({'xsec_y_user_val'+str(xsec_user_yvals[a])+str(i)+key:value})
+                                        plt.close('all')
+    if op_xsec_Z_user  == True:
+        for a in list(range(len(xsec_user_zvals))):
+            for i in list(params):
+                for key,value in plotting(faces,'xsec_z_user_'+str(xsec_user_zvals[a]),
+                                    'xsec_z_user_val'+str(xsec_user_zvals[a]),
+                                    'Z=','Y','X','Y(m)','X(m)',i,rotate=False ).items():
+                                    if value!=[None, None]:
+                                        if op_pdf==True:
+                                            pp.savefig(value[0])
+                                        if op_png==True:
+                                            value[0].savefig(cwd+'/trexplot_output_pngs/'+ 'xsec_z_user_val'+str(xsec_user_zvals[a])+str(i))
+                                        if op_fig==True:
+                                            fig_dictionary.update({'xsec_z_user_val'+str(xsec_user_zvals[a])+str(i)+key:value})
                                         plt.close('all')
     pp.close()
     return fig_dictionary

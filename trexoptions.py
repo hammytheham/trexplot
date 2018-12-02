@@ -36,16 +36,16 @@ op_min_si               = False  #readin absolute values of minerals
 # op_Plasticity           = True # not currently used
 
 #Faces
-op_Top					= True   #output top surface
-op_Bot					= True  #output bottom surface
-op_Max_Y				= True  #output y-plane along the maximum value of x surface
-op_Min_Y				= True	 #output y-plane along the minimum value of x surface
-op_Max_X				= True	 #output x-plane along the maximum value of y surface
-op_Min_X				= True	 #output x-plane along the minimum value of y surface
-op_xsec_Y_half			= True   #output x-plane along the medium value of y
-op_xsec_X_half			= True	 #output y-plane along the medium value of x
-op_xsec_Y_user			= True   #User specified x-planes from y values
-op_xsec_X_user			= True	 #User specified y-planes from x values
+op_Top					= False   #output top surface
+op_Bot					= False  #output bottom surface
+op_Max_Y				= False  #output y-plane along the maximum value of x surface
+op_Min_Y				= False	 #output y-plane along the minimum value of x surface
+op_Max_X				= False	 #output x-plane along the maximum value of y surface
+op_Min_X				= False	 #output x-plane along the minimum value of y surface
+op_xsec_Y_half			= False   #output x-plane along the medium value of y
+op_xsec_X_half			= False	 #output y-plane along the medium value of x
+op_xsec_Y_user			= False   #User specified x-planes from y values
+op_xsec_X_user			= False	 #User specified y-planes from x values
 op_xsec_Z_user			= True	 #User specified z-planes from z values
 
 #Specify cross sections
