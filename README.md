@@ -11,7 +11,7 @@ Features;
 
 -> PDF,PNG & 'custom-build' options
 
--> 'Custom build' - ipython experience https://www.youtube.com/watch?v=fCIjHmeGBvs 
+-> 'Custom build' - ipython experience*
 
 -> Should work with any grids you have.
 
@@ -40,3 +40,4 @@ This will use the `trexoptions.py` file which controls plotting. The trex option
 Use the trex_fig_return.py script as an example of methods to personally modify the returned graphics.
 
 Drop a message if you want new features or have bugs
+
