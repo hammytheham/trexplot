@@ -10,9 +10,11 @@ Features;
 
 -> 4/5 different types of plot
 
+-> Custom x,y & z cross sections
+
 -> PDF,PNG & 'custom-build' options
 
--> 'Custom build' - ipython experience*
+-> 'Custom plot' - ipython experience
 
 -> Should work with any grids you have.
 
