@@ -25,7 +25,7 @@ We supply a set of example .tec files. Move the TestFiles folder somewhere else.
 
 run `ipython SOME-PATH/Trexplot/trexplot.py`
 
-This will use the trexoptions file which controls plotting located in this folder. The trex options supplied by default has only a few options turned on.
+This will use the `trexoptions.py` file which controls plotting. The trex options supplied by default has only a few options turned on. You use this scipt to 'drive the bus'.
 
 Supported .tec files are flow data, flow vector, displacement, stress strain, aqueous concentrations, gas volfrac, mineral abundances and saturation states.
 
