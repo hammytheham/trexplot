@@ -4,10 +4,14 @@ By Hamish Robertson & Tan Benjakul
 
 We aim to deliver a LoFi plotting experience to Toughreactmech output files.
 
-Only plots the last time step at the moment.
-4/5 different types of plot
-Should work with any grids you have.
-You dont need a displacement file (see trexoptions) but the default is you have one in the directory. It is used for the corner locations.
+Features;
+-> Only plots the last time step at the moment
+-> 4/5 different types of plot
+-> PDF,PNG & 'custom-build' options
+-> 'Custom build' - ipython experience https://www.youtube.com/watch?v=fCIjHmeGBvs 
+-> Should work with any grids you have.
+-> Supported .tec files are flow data, flow vector, displacement, stress strain, aqueous concentrations, gas volfrac, mineral abundances and saturation states.
+-> You dont need a displacement file (see trexoptions) but the default is you have one in the directory. It is used for the corner locations.
 
 ## To install
 
@@ -27,10 +31,6 @@ run `ipython SOME-PATH/Trexplot/trexplot.py`
 
 This will use the `trexoptions.py` file which controls plotting. The trex options supplied by default has only a few options turned on. You use this scipt to 'drive the bus'.
 
-Supported .tec files are flow data, flow vector, displacement, stress strain, aqueous concentrations, gas volfrac, mineral abundances and saturation states.
-
 Use the trex_fig_return.py script as an example of methods to personally modify the returned graphics.
-
-Also this vid demos how to interface with the program when using the fig_return option.
 
 Drop a message if you want new features or have bugs
