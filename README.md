@@ -6,11 +6,17 @@ We aim to deliver a LoFi plotting experience to Toughreactmech output files.
 
 Features;
 -> Only plots the last time step at the moment
+
 -> 4/5 different types of plot
+
 -> PDF,PNG & 'custom-build' options
+
 -> 'Custom build' - ipython experience https://www.youtube.com/watch?v=fCIjHmeGBvs 
+
 -> Should work with any grids you have.
+
 -> Supported .tec files are flow data, flow vector, displacement, stress strain, aqueous concentrations, gas volfrac, mineral abundances and saturation states.
+
 -> You dont need a displacement file (see trexoptions) but the default is you have one in the directory. It is used for the corner locations.
 
 ## To install
