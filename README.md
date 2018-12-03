@@ -5,6 +5,7 @@ By Hamish Robertson & Tan Benjakul
 We aim to deliver a LoFi plotting experience to Toughreactmech output files.
 
 Features;
+
 -> Only plots the last time step at the moment
 
 -> 4/5 different types of plot
