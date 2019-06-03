@@ -24,7 +24,7 @@ Features;
 
 ## To install
 
-This doesn't work well yet... Will get it working some moon in the future....
+This doesn't work well yet... Will get it working some moon in the future....Much like I need to do some maintenance and clean up of this script. 
 `pip install -i https://test.pypi.org/simple/ trexplot==1`
 
 Just `git clone` this repo for the time being
