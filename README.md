@@ -42,5 +42,10 @@ This will use the `trexoptions.py` file which controls plotting. The trex option
 
 Use the trex_fig_return.py script as an example of methods to personally modify the returned graphics.
 
-Drop a message if you want new features or have bugs
+Drop a message if you want new features or have bugs. 
+
+If you do use this code and feel inclined to acknowledge;
+
+H. Robertson & T.Benjakul, Trexplot, (2019), GitHub repository, https://github.com/hammytheham/trexplot/
+
 
