@@ -2,7 +2,7 @@
 
 By Hamish Robertson & Tan Benjakul
 
-We aim to deliver a LoFi plotting experience to Toughreactmech output files.
+We aim to deliver a plotting experience to Toughreactmech output files.
 
 Features;
 
