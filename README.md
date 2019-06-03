@@ -24,13 +24,12 @@ Features;
 
 ## To install
 
+This doesn't work well yet... Will get it working some moon in the future....
 `pip install -i https://test.pypi.org/simple/ trexplot==1`
-
-This doesn't works well yet... Will figure out some moon in the future....
 
 Just `git clone` this repo for the time being
 
-## To get stuff to work stuff
+## To get stuff to work
 
 We supply a set of example .tec files. Move the TestFiles folder somewhere else.
 
