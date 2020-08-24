@@ -14,24 +14,24 @@ info                    =True #Runtime progress info for user. Warnings on negat
 #Output
 op_png					= False   #output  png files
 op_pdf					= True  #output pdfs
-op_fig					= True   #return figure files
+op_fig					= False   #return figure files
 
 #Plot types
 colored_cells			=True
 colored_cells_log_plot  =False  #log the coloured cells plot
-contour_plot			=False
-flow_vectors_no_cont	=False
+contour_plot			=True
+flow_vectors_no_cont	=True
 flow_vectors_cont		=False
 
 
 #Files
-op_Flowdata				= True	 #readin flowdata files
+op_Flowdata				= False	 #readin flowdata files
 op_Flowvector			= False	 #readin flowvector files
 op_Displacement			= False	 #note the xsection half values are one 'ahead' as extra value. User no addition
-op_Stress_Strain		= False	 #readin stress_strain files
+op_Stress_Strain		= True	 #readin stress_strain files
 op_aqconc               = False   #readin aqconc file
 op_gas_volfrac          = False  #readin gas_volfrac file
-op_min_ab               = True  #readin mineral saturation
+op_min_ab               = False  #readin mineral saturation
 op_min_si               = False  #readin absolute values of minerals
 # op_Plasticity           = True # not currently used
 
@@ -51,7 +51,7 @@ op_xsec_Z_user			= True	 #User specified z-planes from z values
 #Specify cross sections
 xsec_user_yvals =[1,2,5] #insert y vals for x-plane starting locations
 xsec_user_xvals =[1,3,6] #insert x vals for y-plane starting locations
-xsec_user_zvals =[1,5]   #plan view crosssections
+xsec_user_zvals =[1,3,5]   #plan view crosssections
 
 #Flowdata Variables
 op_Porosity				= True

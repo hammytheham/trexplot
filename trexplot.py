@@ -882,7 +882,7 @@ def pdf_png_fig_plotting(faces,params,file_name):
                     plt.close('all')
     if op_Max_Y== True:
         for i in list(params):
-            for b in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
+            for key,value in plotting(faces      ,'Max-Y','MxYval','Y=','Z','X','X(m)','Z(m)',i,rotate=False).items():
                 if value!=[None, None]:
                     if op_pdf==True:
                         pp.savefig(value[0])
